@@ -29,6 +29,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  authentication_repository:
+    path: packages/authentication_repository
   flutter:
     sdk: flutter
   # The following adds the Cupertino Icons font to your application.
@@ -36,27 +38,54 @@ dependencies:
   cupertino_icons: ^1.0.5
   scrollable_positioned_list: ^0.3.5
   flutter_svg: ^1.1.6
+  google_fonts: ^3.0.1
+  #访问后台
+  dio: ^4.0.6
   #
   flutter_vector_icons: 2.0.0
   #小工具包
-  nb_utils: ^4.6.23
+  nb_utils: ^4.6.25
   #缓存图片
   cached_network_image: ^3.2.2
+  #MobX 是一个用于响应式管理应用程序状态的库。使用可观察对象、动作和反应的力量来增强您的 Dart 和 Flutter 应用程序
+  mobx: ^2.1.0
+  #提供 Observer widget，它监听 observables 并在发生变化时自动重建。
+  flutter_mobx: ^2.0.6+4
+  #
+  built_value: ^8.4.2
+  #信息推送
+  onesignal_flutter: ^3.4.2
+  #Bloc架构
+  bloc: ^8.1.0
+  flutter_bloc: ^8.1.1
+  #数据持久化
+  shared_preferences: ^2.0.15
+  html: ^0.15.1
+  intl: ^0.17.0
+  url_launcher: ^6.1.7
+#  smooth_page_indicator: ^1.0.0+2
+  formz: ^0.4.0
+  user_repository:
+    path: packages/user_repository
+  equatable: ^2.0.5
+  flutter_login: ^4.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  built_value_generator: ^8.4.2
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-scrollable_positioned_list: ^0.3.5
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
+  very_good_analysis: ^3.1.0
 # The following section is specific to Flutter packages.
+  mocktail: ^0.3.0
+  equatable: ^2.0.5
+  flutter_login: ^4.1.0
 flutter:
 
   # The following line ensures that the Material Icons font is
@@ -65,8 +94,12 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+     - images/
+     - fonts/
+     - assets/
+     - assets/mapStyles/
+     - images/classification/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
