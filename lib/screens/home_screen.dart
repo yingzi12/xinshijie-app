@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     HomeFragment(),
     HomeFragment(),
     HomeFragment(),
-    HomeFragment(),
+    AccountFragment(),
   ];
   int _selectedItem = 0;
 

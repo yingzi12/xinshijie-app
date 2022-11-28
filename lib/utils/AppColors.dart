@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 List<Color> webColors = [appCat1, appCat2, appCat3];
 
+//透明的
+const transparent = Colors.transparent;
 // Light Theme Colors 主要颜色
 const appColorPrimary = Color(0xFF5685EC);
 const Color primaryColor = Color(0xFFFD5530);

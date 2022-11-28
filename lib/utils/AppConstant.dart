@@ -31,3 +31,5 @@ const applicationMaxWidth = 500.0;
 const profileImage = 'images/widgets/materialWidgets/mwInputSelectionWidgets/Checkbox/profile.png';
 const isDarkModeOnPref = 'isDarkModeOnPref';
 const dateFormat = 'yyyy-MM-dd';
+
+const fontMedium = 'Medium';
