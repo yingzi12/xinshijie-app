@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
 import 'package:xinshijieapp/components/home_service_component.dart';
+import 'package:xinshijieapp/components/popular_service_component.dart';
 import 'package:xinshijieapp/models/customer_details_model.dart';
+import 'package:xinshijieapp/models/user_model.dart';
 import 'package:xinshijieapp/utils/AppColors.dart';
 import 'package:xinshijieapp/utils/AppImages.dart';
 import 'package:xinshijieapp/utils/AppWidget.dart';
@@ -63,6 +66,7 @@ class _HomeFragmentState extends State<HomeFragment> {
 
   @override
   Widget build(BuildContext context) {
+    UserModel userModel = Provider.of<UserModel>(context);
     aspectRatio = MediaQuery.of(context).size.aspectRatio;
     return Scaffold(
       appBar: AppBar(
@@ -82,94 +86,7 @@ class _HomeFragmentState extends State<HomeFragment> {
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.all(0),
-          children: [
-            Container(
-              padding: EdgeInsets.only(left: 24, right: 24, top: 40, bottom: 24),
-              color: appStore.isDarkModeOn ? Colors.black : Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
-                      "张三",
-                      style: TextStyle(fontSize: 24.0, color: appStore.isDarkModeOn ? black : white),
-                      textAlign: TextAlign.center,
-                    ),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: appStore.isDarkModeOn ? white : Colors.black,
-                    ),
-                  ),
-                  Space(4),
-                  Text(
-                    getName,
-                    style: TextStyle(fontSize: 18, color: appStore.isDarkModeOn ? white : Colors.black, fontWeight: FontWeight.bold),
-                  ),
-                  Space(4),
-                  Text(getEmail, style: TextStyle(color: appColorAccent)),
-                ],
-              ),
-            ),
-            drawerWidget(
-              drawerTitle: "我的资料",
-              drawerIcon: Icons.person,
-              drawerOnTap: () {
-                // Navigator.pop(context);
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfileScreen()));
-              },
-            ),
-            drawerWidget(
-              drawerTitle: "我的关注",
-              drawerIcon: Icons.favorite,
-              drawerOnTap: () {
-                // Navigator.pop(context);
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => FavouriteProvidersScreen()));
-              },
-            ),
-            drawerWidget(
-              drawerTitle: "通知",
-              drawerIcon: Icons.notifications,
-              drawerOnTap: () {
-                // Navigator.pop(context);
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen()));
-              },
-            ),
-            drawerWidget(
-              drawerTitle: "推荐和赚钱",
-              drawerIcon: Icons.paid_rounded,
-              drawerOnTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            drawerWidget(
-              drawerTitle: "联系我们",
-              drawerIcon: Icons.mail,
-              drawerOnTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            drawerWidget(
-              drawerTitle: "帮助",
-              drawerIcon: Icons.question_mark_rounded,
-              drawerOnTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            drawerWidget(
-              drawerTitle: "退出",
-              drawerIcon: Icons.logout,
-              drawerOnTap: () {
-                Navigator.pop(context);
-                _showLogOutDialog();
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: getDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -261,7 +178,7 @@ class _HomeFragmentState extends State<HomeFragment> {
               },
             ),
             Space(4),
-            // PopularServiceComponent(),
+            PopularServiceComponent(),
             Space(24),
             homeTitleWidget(
               titleText: "故事-热门推荐",
@@ -310,4 +227,101 @@ class _HomeFragmentState extends State<HomeFragment> {
       ),
     );
   }
+  @override
+  Widget getDrawer(){
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.all(0),
+        children: [
+          Container(
+            padding: EdgeInsets.only(
+                left: 24, right: 24, top: 40, bottom: 24),
+            color: appStore.isDarkModeOn ? Colors.black : Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(16),
+                  child: Text(
+                    "张三",
+                    style: TextStyle(fontSize: 24.0,
+                        color: appStore.isDarkModeOn ? black : white),
+                    textAlign: TextAlign.center,
+                  ),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: appStore.isDarkModeOn ? white : Colors.black,
+                  ),
+                ),
+                Space(4),
+                Text(
+                  getName,
+                  style: TextStyle(fontSize: 18,
+                      color: appStore.isDarkModeOn ? white : Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
+                Space(4),
+                Text(getEmail, style: TextStyle(color: appColorAccent)),
+              ],
+            ),
+          ),
+          drawerWidget(
+            drawerTitle: "我的资料",
+            drawerIcon: Icons.person,
+            drawerOnTap: () {
+              // Navigator.pop(context);
+              // Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfileScreen()));
+            },
+          ),
+          drawerWidget(
+            drawerTitle: "我的关注",
+            drawerIcon: Icons.favorite,
+            drawerOnTap: () {
+              // Navigator.pop(context);
+              // Navigator.push(context, MaterialPageRoute(builder: (context) => FavouriteProvidersScreen()));
+            },
+          ),
+          drawerWidget(
+            drawerTitle: "通知",
+            drawerIcon: Icons.notifications,
+            drawerOnTap: () {
+              // Navigator.pop(context);
+              // Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen()));
+            },
+          ),
+          drawerWidget(
+            drawerTitle: "推荐和赚钱",
+            drawerIcon: Icons.paid_rounded,
+            drawerOnTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          drawerWidget(
+            drawerTitle: "联系我们",
+            drawerIcon: Icons.mail,
+            drawerOnTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          drawerWidget(
+            drawerTitle: "帮助",
+            drawerIcon: Icons.question_mark_rounded,
+            drawerOnTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          drawerWidget(
+            drawerTitle: "退出",
+            drawerIcon: Icons.logout,
+            drawerOnTap: () {
+              Navigator.pop(context);
+              _showLogOutDialog();
+            },
+          ),
+
+        ],
+      ),
+    );
+  }
+
 }
