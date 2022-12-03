@@ -446,3 +446,65 @@ void showSnackBar(BuildContext context, String msg) {
     ),
   );
 }
+
+Padding EditTextField(var hintText, {isPassword = true}) {
+  return Padding(
+      padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+      child: TextFormField(
+        style: primaryTextStyle(size: 18),
+        obscureText: isPassword,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(26, 18, 4, 18),
+          hintText: hintText,
+          filled: true,
+          fillColor: editBackground,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(40),
+            borderSide: BorderSide(color: editBackground, width: 0.0),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(40),
+            borderSide: BorderSide(color: editBackground, width: 0.0),
+          ),
+        ),
+      ));
+}
+
+//ignore: must_be_immutable
+class SignAppButton extends StatefulWidget {
+  var textContent;
+  VoidCallback onPressed;
+
+  SignAppButton({required this.textContent, required this.onPressed});
+
+  @override
+  State<StatefulWidget> createState() {
+    return SignAppButtonState();
+  }
+}
+
+class SignAppButtonState extends State<SignAppButton> {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: widget.onPressed,
+      style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)), padding: EdgeInsets.all(0.0), elevation: 4, textStyle: TextStyle(color: white)),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: <Color>[appColorPrimary, appColorAccent]),
+          borderRadius: BorderRadius.all(Radius.circular(80.0)),
+        ),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(18.0),
+            child: Text(
+              widget.textContent,
+              style: TextStyle(fontSize: 18),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

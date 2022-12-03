@@ -27,7 +27,7 @@ const appOpenCount = 'appOpenCount';
 
 /// Linux - for linux, you have to change default window width in linux/my_application.cc
 const applicationMaxWidth = 500.0;
-
+double mainTitleTextSize = 32;
 const profileImage = 'images/widgets/materialWidgets/mwInputSelectionWidgets/Checkbox/profile.png';
 const isDarkModeOnPref = 'isDarkModeOnPref';
 const dateFormat = 'yyyy-MM-dd';

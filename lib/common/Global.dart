@@ -8,22 +8,12 @@ import 'package:xinshijieapp/models/Profile.dart';
 import 'package:xinshijieapp/utils/CacheObject.dart';
 import 'package:xinshijieapp/utils/Git.dart';
 
-const _themes = <MaterialColor>[
-  Colors.blue,
-  Colors.cyan,
-  Colors.teal,
-  Colors.green,
-  Colors.red,
-];
-
 class Global {
   static late SharedPreferences _prefs;
   static Profile profile = Profile(cache: null);
   // 网络缓存对象
   static NetCache netCache = NetCache();
 
-  // 可选的主题列表
-  static List<MaterialColor> get themes => _themes;
 
   // 是否为release版
   static bool get isRelease => bool.fromEnvironment("dart.vm.product");
@@ -39,9 +29,6 @@ class Global {
       } catch (e) {
         print(e);
       }
-    }else{
-      // 默认主题索引为0，代表蓝色
-      profile= Profile(cache: null)..theme=0;
     }
 
     // 如果没有缓存策略，设置默认缓存策略

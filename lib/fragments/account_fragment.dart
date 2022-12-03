@@ -21,7 +21,9 @@ import 'package:xinshijieapp/utils/space.dart';
 
 class AccountFragment extends StatefulWidget {
   const AccountFragment({Key? key}) : super(key: key);
-
+  static Route<void> route() {
+    return MaterialPageRoute<void>(builder: (_) => const AccountFragment());
+  }
   @override
   State<AccountFragment> createState() => _AccountFragmentState();
 }

@@ -1,6 +1,7 @@
 // TODO Implement this library.
 import 'dart:async';
 
+//未知的,已认证的,未认证的
 enum AuthenticationStatus { unknown, authenticated, unauthenticated }
 //将AuthenticationBloc负责对身份验证状态的变化（由 公开AuthenticationRepository）做出反应
 // ，并将发出我们可以在表示层中做出反应的状态。

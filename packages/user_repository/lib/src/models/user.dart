@@ -9,4 +9,7 @@ class User extends Equatable {
   List<Object> get props => [id];
 
   static const empty = User('-');
+
+  User.fromJson(dynamic json, this.id) {
+  }
 }

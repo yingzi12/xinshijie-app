@@ -52,9 +52,9 @@ class AppThemeData {
       iconTheme: IconThemeData(color: blackColor),
       systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
     ),
-    primaryColor: color_primary_black,
+    primaryColor: colorPrimaryBlack,
     dividerColor: Color(0xFFDADADA).withOpacity(0.3),
-    primaryColorDark: color_primary_black,
+    primaryColorDark: colorPrimaryBlack,
     textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.white),
     hoverColor: Colors.black12,
     fontFamily: GoogleFonts.openSans().fontFamily,
@@ -64,12 +64,12 @@ class AppThemeData {
     cardColor: appSecondaryBackgroundColor,
     iconTheme: IconThemeData(color: whiteColor),
     textTheme: TextTheme(
-      button: TextStyle(color: color_primary_black),
+      button: TextStyle(color: colorPrimaryBlack),
       headline6: TextStyle(color: whiteColor),
       subtitle2: TextStyle(color: Colors.white54),
     ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
-    colorScheme: ColorScheme.dark(primary: appBackgroundColorDark, onPrimary: cardBackgroundBlackDark, primaryVariant: color_primary_black).copyWith(secondary: whiteColor),
+    colorScheme: ColorScheme.dark(primary: appBackgroundColorDark, onPrimary: cardBackgroundBlackDark, primaryVariant: colorPrimaryBlack).copyWith(secondary: whiteColor),
   ).copyWith(
     pageTransitionsTheme: PageTransitionsTheme(builders: <TargetPlatform, PageTransitionsBuilder>{
       TargetPlatform.android: OpenUpwardsPageTransitionsBuilder(),

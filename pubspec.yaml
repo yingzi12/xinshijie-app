@@ -29,8 +29,6 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  authentication_repository:
-    path: packages/authentication_repository
   flutter:
     sdk: flutter
   # The following adds the Cupertino Icons font to your application.
@@ -41,6 +39,8 @@ dependencies:
   google_fonts: ^3.0.1
   #访问后台
   dio: ^4.0.6
+  #状态管理
+  provider: ^6.0.4
   #
   flutter_vector_icons: 2.0.0
   #小工具包
@@ -55,9 +55,6 @@ dependencies:
   built_value: ^8.4.2
   #信息推送
   onesignal_flutter: ^3.4.2
-  #Bloc架构
-  bloc: ^8.1.0
-  flutter_bloc: ^8.1.1
   #数据持久化
   shared_preferences: ^2.0.15
   html: ^0.15.1
@@ -65,10 +62,7 @@ dependencies:
   url_launcher: ^6.1.7
 #  smooth_page_indicator: ^1.0.0+2
   formz: ^0.4.0
-  user_repository:
-    path: packages/user_repository
   equatable: ^2.0.5
-  flutter_login: ^4.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
