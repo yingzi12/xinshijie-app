@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:xinshijieapp/models/world_model.dart';
-import 'package:xinshijieapp/utils/AppImages.dart';
-import 'package:xinshijieapp/utils/Git.dart';
+import 'package:xinshijieapp/data/world_data_utils.dart';
+import 'package:xinshijieapp/models/world_entity.dart';
+import 'package:xinshijieapp/screens/world_detail_screen.dart';
+import 'package:xinshijieapp/utils/AppConstant.dart';
 
 class PopularServiceComponent extends StatefulWidget {
   @override
@@ -9,7 +10,7 @@ class PopularServiceComponent extends StatefulWidget {
 }
 
 class _PopularServiceComponentState extends State<PopularServiceComponent> {
-  late List<World> servicesList;
+  late List<WorldEntity> worldRecommendedList;
 
   @override
   void initState() {
@@ -19,8 +20,7 @@ class _PopularServiceComponentState extends State<PopularServiceComponent> {
 
   void init() async {
     //获取世界推荐
-    servicesList=getWorldRecommendedList();
-    //
+   getWorldRecommendedList();
   }
 
   @override
@@ -36,13 +36,13 @@ class _PopularServiceComponentState extends State<PopularServiceComponent> {
         padding: EdgeInsets.symmetric(horizontal: 8),
         scrollDirection: Axis.horizontal,
         children: List.generate(
-          servicesList.length,
+          worldRecommendedList.length,
           (index) => GestureDetector(
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => ServiceProvidersScreen(index: index)),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WorldDetailScreen(wid: worldRecommendedList[index].id ?? -1)),
+              );
             },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 8),
@@ -50,7 +50,7 @@ class _PopularServiceComponentState extends State<PopularServiceComponent> {
                 width: 110,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
-                  child: Image.asset(servicesList[index], fit: BoxFit.cover),
+                  child: Image.network(aliyunImgUrl+(worldRecommendedList[index].imgUrl ?? ""), fit: BoxFit.cover),
                 ),
               ),
             ),
@@ -60,13 +60,10 @@ class _PopularServiceComponentState extends State<PopularServiceComponent> {
     );
   }
 
-  Future<List<World>> getWorldRecommendedList() async {
-    var data = await Git(context).getRepos(
-      queryParameters: {
-        'pageSize': 6,
-      },
-    );
-   return data;
-
+  void getWorldRecommendedList()  {
+    WorldDataUtils.getPageList({'pageNum': 1, 'pageSize': 6}, success: (res) {
+      worldRecommendedList = List<WorldEntity>.from(res['rows'].map((x) => WorldEntity.fromJson(x)));
+    }, fail: (code, msg) {});
   }
+
 }

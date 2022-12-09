@@ -24,6 +24,8 @@ const textSizeXXLarge = 35.0;
 
 // Shared Pref
 const appOpenCount = 'appOpenCount';
+///app.provide("$imgUrl","https://shadow-xinshijie.oss-cn-hongkong.aliyuncs.com")
+const aliyunImgUrl = 'https://shadow-xinshijie.oss-cn-hongkong.aliyuncs.com';
 
 /// Linux - for linux, you have to change default window width in linux/my_application.cc
 const applicationMaxWidth = 500.0;

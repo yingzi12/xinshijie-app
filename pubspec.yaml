@@ -34,38 +34,54 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.5
+  #一个列表，其中包含以编程方式滚动到项目的辅助方法。
   scrollable_positioned_list: ^0.3.5
   flutter_svg: ^1.1.6
   google_fonts: ^3.0.1
-  #访问后台
-  dio: ^4.0.6
-  #状态管理
-  provider: ^6.0.4
   #
   flutter_vector_icons: 2.0.0
+  #访问后台
+  dio: ^4.0.6
+  # lru缓存库
+  dio_cache_interceptor: ^3.3.1
+  #状态管理
+  provider: ^6.0.4
   #小工具包
   nb_utils: ^4.6.25
   #缓存图片
   cached_network_image: ^3.2.2
   #MobX 是一个用于响应式管理应用程序状态的库。使用可观察对象、动作和反应的力量来增强您的 Dart 和 Flutter 应用程序
-  mobx: ^2.1.0
+  mobx: ^2.1.3
   #提供 Observer widget，它监听 observables 并在发生变化时自动重建。
-  flutter_mobx: ^2.0.6+4
-  #
-  built_value: ^8.4.2
+  flutter_mobx: ^2.0.6+5
   #信息推送
   onesignal_flutter: ^3.4.2
   #数据持久化
   shared_preferences: ^2.0.15
   html: ^0.15.1
-  intl: ^0.17.0
   url_launcher: ^6.1.7
-#  smooth_page_indicator: ^1.0.0+2
+  #Dart 中的统一形式表示。 Formz 旨在以通用方式简化表单表示和验证。
   formz: ^0.4.0
+  json_serializable: ^6.5.4
+  #为了能够在Dart中比较对象，通常需要重写==操作符和hashCode。
+  #它不仅冗长乏味，而且如果不这样做，就会导致代码的效率低下，不能像我们预期的那样运行。
+  #默认情况下，如果两个对象是同一个实例，==返回true。
   equatable: ^2.0.5
+  #弹出框
+  bot_toast: ^4.0.3
+  #对十进制进行计算,防止失去精度
+  decimal: ^2.3.1
+  rational: ^2.2.1
+  #加解密
+  encrypt: ^5.0.1
+  bruno: ^3.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  #建筑价值提供： 不可变值类型； EnumClass，行为类似于枚举的类； JSON 序列化。
+  #这个工具，转为迅速根据接口或者说json串，迅速生成一个类
+  json_serializable:
+  built_value: ^8.4.2
   built_value_generator: ^8.4.2
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -79,7 +95,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
   mocktail: ^0.3.0
   equatable: ^2.0.5
-  flutter_login: ^4.1.0
+
 flutter:
 
   # The following line ensures that the Material Icons font is

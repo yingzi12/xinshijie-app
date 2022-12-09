@@ -4,12 +4,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
-import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 // import 'package:xinshijieapp/utils/common.dart';
 import 'package:xinshijieapp/main.dart';
 import 'package:xinshijieapp/models/AppModel.dart';
 import 'package:xinshijieapp/models/ListModels.dart';
+import 'package:xinshijieapp/utils/common_utils/common_utils.dart';
 
 import 'AppColors.dart';
 import 'AppConstant.dart';
@@ -164,7 +164,7 @@ class ExampleItemWidget extends StatelessWidget {
 
 String convertDate(date) {
   try {
-    return date != null ? DateFormat(dateFormat).format(DateTime.parse(date)) : '';
+    return date != null ? DateUtil.formatDate(DateTime.parse(date),format:dateFormat) : '';
   } catch (e) {
     print(e);
     return '';
