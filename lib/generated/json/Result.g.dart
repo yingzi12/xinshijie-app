@@ -1,5 +1,6 @@
 import 'package:xinshijieapp/generated/json/base/json_convert_content.dart';
 import 'package:xinshijieapp/models/Result.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 
 Result $ResultFromJson(Map<String, dynamic> json) {

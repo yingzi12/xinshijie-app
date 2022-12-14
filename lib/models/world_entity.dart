@@ -42,9 +42,6 @@ class WorldEntity {
   
   WorldEntity();
 
-	// String get imgUrl => imgUrl ?? '';
-
-
 	factory WorldEntity.fromJson(Map<String, dynamic> json) => $WorldEntityFromJson(json);
 
   Map<String, dynamic> toJson() => $WorldEntityToJson(this);

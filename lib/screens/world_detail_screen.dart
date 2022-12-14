@@ -1,25 +1,82 @@
 import 'package:bruno/bruno.dart';
 import 'package:flutter/material.dart';
 import 'package:xinshijieapp/components/comment_component.dart';
+import 'package:xinshijieapp/components/world_detail_component.dart';
+import 'package:xinshijieapp/data/comments_data_utils.dart';
+import 'package:xinshijieapp/data/world_data_utils.dart';
+import 'package:xinshijieapp/models/comments_entity.dart';
+import 'package:xinshijieapp/models/world_entity.dart';
+import 'package:xinshijieapp/models/world_model.dart';
+import 'package:xinshijieapp/utils/AppConstant.dart';
 
 import 'package:xinshijieapp/utils/AppWidget.dart';
 import 'package:xinshijieapp/utils/space.dart';
 
 class WorldDetailScreen extends StatefulWidget {
-  final int wid;
-  const WorldDetailScreen({Key? key,required this.wid}) : super(key: key);
+  WorldDetailScreen({Key? key,required this.wid}) : super(key: key);
+  int wid;
 
   @override
   State<WorldDetailScreen> createState() => _WorldDetailScreenState();
 }
 
 class _WorldDetailScreenState extends State<WorldDetailScreen> {
+    WorldEntity? world;
+
+    List<CommentsEntity>? commentsList;
+
+   @override
+   void initState() {
+     print("---------------_WorldDetailScreenState- initState-----------------");
+    // TODO: implement initState
+    super.initState();
+     init();
+  }
+
+
+  Future<void> init() async {
+    getWorldDatetail();
+    getCommentsList();
+  }
+  void getWorldDatetail()  {
+    WorldDataUtils.getDatetail(widget.wid, success: (res) {
+      print("==============world mode ============getDtail========2========");
+      setState(() {
+        world = WorldEntity.fromJson(res["data"]);
+        print("==============world mode ============getDtail========4========");
+      });
+      print("==============world mode ============getDtail========3========");
+    }, fail: (code, msg) {}
+    );
+  }
+  void getCommentsList()  {
+    CommentsDataUtils.getPageList({'pageNum': 1, 'pageSize': 6,'wid':widget.wid}, success: (res) {
+      setState(() {
+        commentsList = List<CommentsEntity>.from(
+            res['rows'].map((x) => CommentsEntity.fromJson(x)));
+      });
+    }, fail: (code, msg) {});
+  }
+  @override
+  void didUpdateWidget(covariant WorldDetailScreen oldWidget) {
+    print("-----------------_WorldDetailScreenState---- didUpdateWidget 1 --------------------");
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    print("-----------------_WorldDetailScreenState---- didUpdateWidget 2--------------------");
+  }
+  
   @override
   Widget build(BuildContext context) {
+    print("---------------_WorldDetailScreenState- build-----------------");
+    if(world == null ||commentsList == null){
+      return Center(
+        child: Text('加载中...'),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         //导航栏
-        title: Text("App Name"),
+        title: Text("世界信息"),
         actions: <Widget>[
           //导航栏右侧菜单
           IconButton(icon: const Icon(Icons.share), onPressed: () {}),
@@ -33,20 +90,12 @@ class _WorldDetailScreenState extends State<WorldDetailScreen> {
             child: Column(
               children: <Widget>[
                 //Flex的两个子widget按1：2来占据水平空间
-                const Card(
-                  child: CustomWorldDetailItem(
-                    user: 'Flutter',
-                    viewCount: 999000,
-                    imageUrl: "https://avatars2.githubusercontent.com/u/20411648?s=460&v=4",
-                    title: 'The Flutter YouTube Channel',
-                  ),
-
-                ),
+                WorldDetailComponent(world: world!),
                 Space(8),
-                //标签
+                //简介
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0),
-                  child: Text("这一段很长的说明,这是一段很长的说明这一段很长的说明,这是一段很长的说明这一段很长的说明,这是一段很长的说明"),
+                  child: Text(world?.intro ??""),
                 ),
                 Space(8),
                 Padding(
@@ -75,7 +124,7 @@ class _WorldDetailScreenState extends State<WorldDetailScreen> {
                                 // borderRadius: new BorderRadius.vertical(top: Radius.elliptical(20, 50)), // 也可控件一边圆角大小
                               ),
                               child: Column(
-                                children: <Widget>[Text("元素"), Text("2")],
+                                children: <Widget>[Text("元素"), Text(world!.countElement!.toString()?? "0")],
                               ))
                           )
                       ),
@@ -94,7 +143,7 @@ class _WorldDetailScreenState extends State<WorldDetailScreen> {
                               },
                               child: Container(
                               child: Column(
-                            children: <Widget>[Text("章节"), Text("30")],
+                                children: <Widget>[Text("故事"), Text(world!.countStory!.toString()?? "0")],
                           )),
                           ),
                       ),
@@ -108,7 +157,7 @@ class _WorldDetailScreenState extends State<WorldDetailScreen> {
                                 // borderRadius: new BorderRadius.vertical(top: Radius.elliptical(20, 50)), // 也可控件一边圆角大小
                               ),
                               child: Column(
-                                children: <Widget>[Text("元素"), Text("2")],
+                                children: <Widget>[Text("讨论"), Text(world!.countComment!.toString()?? "0")],
                               ))),
                     ],
                   ),
@@ -126,22 +175,7 @@ class _WorldDetailScreenState extends State<WorldDetailScreen> {
                   },
                 ),
                 Column(
-                  children: [
-                    CommentComponet(),
-                    CommentComponet(),
-                    CommentComponet(),
-                    CommentComponet(),
-                    Card(
-                      child: ListTile(
-                        leading: FlutterLogo(size: 72.0),
-                        title: Text('Three-line ListTile'),
-                        subtitle: Text(
-                            'A sufficiently long subtitle warrants three lines.'),
-                        trailing: Icon(Icons.more_vert),
-                        isThreeLine: true,
-                      ),
-                    ),
-                  ],
+                  children: _listView(commentsList!),
                 ),
               ],
             ),
@@ -150,172 +184,10 @@ class _WorldDetailScreenState extends State<WorldDetailScreen> {
       ),
     );
   }
-}
 
-
-class CustomWorldDetailItem extends StatelessWidget {
-  const CustomWorldDetailItem({
-    super.key,
-    required this.imageUrl,
-    required this.title,
-    required this.user,
-    required this.viewCount,
-  });
-
-  final String imageUrl;
-  final String title;
-  final String user;
-  final int viewCount;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: Image(
-                      width: 100.0,
-                      height: 140.0,
-                      fit:BoxFit.fill,
-                      image: NetworkImage(imageUrl),
-                    ),
-          ),
-          Expanded(
-            flex: 4,
-            child: _VideoDescription(
-              title: title,
-              user: user,
-              viewCount: viewCount,
-            ),
-          ),
-          // const Icon(
-          //   Icons.more_vert,
-          //   size: 16.0,
-          // ),
-        ],
-      ),
-    );
-  }
-}
-
-class _VideoDescription extends StatelessWidget {
-  const _VideoDescription({
-    required this.title,
-    required this.user,
-    required this.viewCount,
-  });
-
-  final String title;
-  final String user;
-  final int viewCount;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 14.0,
-            ),
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Text(
-            user,
-            style: const TextStyle(fontSize: 10.0),
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
-                Wrap(
-                  spacing: 8.0, // 主轴(水平)方向间距
-                  runSpacing: 4.0, // 纵轴（垂直）方向间距
-                  children: <Widget>[
-                    BrnStateTag(
-                      tagText: '这是一个长长的内容',
-                      tagState: TagState.succeed,
-                    ),
-                    BrnStateTag(
-                      tagText: '成功态',
-                      tagState: TagState.succeed,
-                    ),
-                    BrnStateTag(
-                      tagText: '成功态',
-                      tagState: TagState.succeed,
-                    ),
-                    BrnStateTag(
-                      tagText: '成功态',
-                      tagState: TagState.succeed,
-                    ),
-                    BrnStateTag(
-                      tagText: '成功态',
-                      tagState: TagState.succeed,
-                    ),
-                    BrnStateTag(
-                      tagText: '成功态',
-                      tagState: TagState.succeed,
-                    ),
-                    BrnStateTag(
-                      tagText: '成功态',
-                      tagState: TagState.succeed,
-                    ),
-                    BrnStateTag(
-                      tagText: '成功态',
-                      tagState: TagState.succeed,
-                    ),
-                    BrnStateTag(
-                      tagText: '成功态',
-                      tagState: TagState.succeed,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Icon(Icons.accessible,
-                        color: Colors.green, size: 20),
-                    Text(
-                      "Hello",
-                      textScaleFactor: 0.5,
-                    ),
-                    Icon(Icons.error,
-                        color: Colors.green, size: 20),
-                    Text(
-                      "Hello",
-                      textScaleFactor: 0.5,
-                    ),
-                    Icon(Icons.fingerprint,
-                        color: Colors.green, size: 20),
-                    Text(
-                      "Hello",
-                      textScaleFactor: 0.5,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    ElevatedButton(
-                      child: Text("操作"),
-                      onPressed: () {
-                        // ElementDetailComponent().launch(context);
-                      },
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      child: Text("操作"),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-
-        ],
-      ),
-    );
+  List<Widget> _listView(List<CommentsEntity> list){
+    return list.map((f)=>
+        CommentComponet(comments: f),
+    ).toList();
   }
 }

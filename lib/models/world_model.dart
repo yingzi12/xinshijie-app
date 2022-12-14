@@ -1,4 +1,5 @@
 import 'package:xinshijieapp/common/ProfileChangeNotifier.dart';
+import 'package:xinshijieapp/data/world_data_utils.dart';
 import 'package:xinshijieapp/models/world_entity.dart';
 
 class WorldModel extends ProfileChangeNotifier {
@@ -14,4 +15,26 @@ class WorldModel extends ProfileChangeNotifier {
       notifyListeners();
     // }
   }
+}
+
+List<WorldEntity> getList(){
+  List<WorldEntity> worldRecommendedList= List.empty(growable: true);
+  WorldDataUtils.getPageList({'pageNum': 1, 'pageSize': 6}, success: (res) {
+      worldRecommendedList = List<WorldEntity>.from(res['rows'].map((x) => WorldEntity.fromJson(x)));
+      }, fail: (code, msg) {}
+  );
+  return worldRecommendedList;
+}
+
+WorldEntity? getDtail(int wid){
+  print("==============world mode ============getDtail========1========");
+  WorldEntity? world=null;
+  WorldDataUtils.getDatetail(wid, success: (res) {
+    print("==============world mode ============getDtail========2========");
+    world = WorldEntity.fromJson(res["data"]);
+      }, fail: (code, msg) {}
+  );
+  print("==============world mode ============getDtail========3========");
+
+  return world;
 }

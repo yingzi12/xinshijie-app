@@ -5,7 +5,7 @@
 
 class APIs {
   /// url 前缀
-  static const String apiPrefix = 'http://192.168.16.139:8099';
+  static const String apiPrefix = 'http://16.162.220.166:8099';
 
   /// 登录接口
   static const String login = '/login';

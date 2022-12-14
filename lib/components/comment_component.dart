@@ -1,24 +1,25 @@
 import 'package:bruno/bruno.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:xinshijieapp/models/comments_entity.dart';
+import 'package:xinshijieapp/utils/AppConstant.dart';
 
 class CommentComponet extends StatefulWidget {
-  const CommentComponet({Key? key}) : super(key: key);
+  CommentComponet({Key? key, required this.comments}) : super(key: key);
+  CommentsEntity comments;
 
   @override
   State<CommentComponet> createState() => _CommentComponetState();
 }
 
 class _CommentComponetState extends State<CommentComponet> {
-  // late final NBNewsDetailsModel? newsDetails=new NBNewsDetailsModel(
-  //   categoryName: 'Sports',
-  //   title: 'NHL roundup: Mika Zibanejad\'s record night powers Rangers',
-  //   date: '20 jan 2021',
-  //   image: "jitu",
-  //   details: details,
-  //   time: '40:18',
-  //   isBookmark: true,
-  // );
+  @override
+  void didUpdateWidget(covariant CommentComponet oldWidget) {
+    print(
+        "-----------------_CommentComponetState---- didUpdateWidget--------------------");
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,24 +35,35 @@ class _CommentComponetState extends State<CommentComponet> {
                 height: 20,
                 child: CircleAvatar(
                   backgroundImage: NetworkImage(
-                      "https://www.sailmet.com/Content/Images/news/202204/3055a95d17ad4591a49451a426c889d3.jpg"),
+                      aliyunImgUrl+widget.comments.circleUrl.toString()),
                 ),
               ),
-              Text("我是很长的用户名",
+              Text(widget.comments.nickname ?? "",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 20.0,
                   )),
-              Icon(Icons.emoji_emotions, color: Colors.yellow),
-              Text("推荐",
-                  style: TextStyle(
-                    color: Colors.black45,
-                    fontSize: 20.0,
-                  )),
+              Offstage(
+                offstage: widget.comments.isRecommend == null ||
+                        widget.comments.isRecommend == 2
+                    ? false
+                    : true,
+                child: Icon(Icons.emoji_emotions, color: Colors.yellow),
+              ),
+              Offstage(
+                offstage: widget.comments.isRecommend == null ||
+                        widget.comments.isRecommend == 2
+                    ? false
+                    : true,
+                child: Text("推荐",
+                    style: TextStyle(
+                      color: Colors.black45,
+                      fontSize: 20.0,
+                    )),
+              ),
             ]),
             BrnExpandableText(
-                text: '冠寓是龙湖地产的第三大主航道业务，专注做中高端租赁市场，标语是我家我自在；门店位于昌平区390号，'
-                    '距离昌平线生命科学冠寓是龙湖地产的第三大主航道业务，专注做中高端租赁市场，标语是我家我自在标语是我家我自在。',
+                text: widget.comments.comment ?? "",
                 maxLines: 3,
                 onExpanded: (bool isExpanded) {
                   if (isExpanded) {
@@ -76,10 +88,10 @@ class _CommentComponetState extends State<CommentComponet> {
                     //favorite
                     icon: Icon(Icons.favorite_border),
                     onPressed: () {
-                    // finish(context);
-                    // NBCommentScreen().launch(context);
-                  },
-                    label: Text("10"),
+                      // finish(context);
+                      // NBCommentScreen().launch(context);
+                    },
+                    label: Text(widget.comments.countLike.toString()),
                   ),
                 ),
               ),
@@ -92,7 +104,7 @@ class _CommentComponetState extends State<CommentComponet> {
                       finish(context);
                       // CommentDetailScreen().launch(context);
                     },
-                    label: Text("10"),
+                    label: Text(widget.comments.countReply.toString()),
                   ),
                 ),
               ),

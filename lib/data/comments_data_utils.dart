@@ -3,6 +3,7 @@
 ///  Created by iotjin on 2021/04/01.
 ///  description:  项目数据请求 管理类
 
+import 'package:xinshijieapp/http/comments_apis.dart';
 import 'package:xinshijieapp/http/world_apis.dart';
 
 import '/http/apis.dart';
@@ -11,7 +12,7 @@ import '/http/http_utils.dart';
 typedef Success<T> = Function(T data);
 typedef Fail = Function(int code, String msg);
 
-class WorldDataUtils {
+class CommentsDataUtils {
 
   /// 分页加载数据
   static void getPageList<T>(
@@ -19,7 +20,7 @@ class WorldDataUtils {
     Success? success,
     Fail? fail,
   }) {
-    HttpUtils.get(APIs.apiPrefix+WorldAPIs.getWorldList, parameters, success: success, fail: fail);
+    HttpUtils.get(APIs.apiPrefix+CommentsAPIs.getList, parameters, success: success, fail: fail);
   }
 
   /// 世界信息
@@ -29,7 +30,7 @@ class WorldDataUtils {
         Success? success,
         Fail? fail,
       }) {
-    HttpUtils.get(APIs.apiPrefix+WorldAPIs.getWorldInfo+"/$wid",
+    HttpUtils.get(APIs.apiPrefix+CommentsAPIs.getInfo+"/$wid",
         {}, success: success, fail: fail);
   }
 }
