@@ -1,7 +1,3 @@
-///  apis.dart
-///
-///  Created by iotjin on 2020/07/07.
-///  description:  api 管理
 
 class WorldAPIs {
   /// 获取世界列表

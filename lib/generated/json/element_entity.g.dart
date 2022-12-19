@@ -3,21 +3,17 @@ import 'package:xinshijieapp/models/element_entity.dart';
 
 ElementEntity $ElementEntityFromJson(Map<String, dynamic> json) {
 	final ElementEntity elementEntity = ElementEntity();
-	final String? audit = jsonConvert.convert<String>(json['audit']);
-	if (audit != null) {
-		elementEntity.audit = audit;
+	final List<ElementCategoryList>? categoryList = jsonConvert.convertListNotNull<ElementCategoryList>(json['categoryList']);
+	if (categoryList != null) {
+		elementEntity.categoryList = categoryList;
 	}
-	final int? auditId = jsonConvert.convert<int>(json['auditId']);
-	if (auditId != null) {
-		elementEntity.auditId = auditId;
+	final List<dynamic>? cnameList = jsonConvert.convertListNotNull<dynamic>(json['cnameList']);
+	if (cnameList != null) {
+		elementEntity.cnameList = cnameList;
 	}
-	final String? auditName = jsonConvert.convert<String>(json['auditName']);
-	if (auditName != null) {
-		elementEntity.auditName = auditName;
-	}
-	final String? auditTime = jsonConvert.convert<String>(json['auditTime']);
-	if (auditTime != null) {
-		elementEntity.auditTime = auditTime;
+	final List<ElementContentList>? contentList = jsonConvert.convertListNotNull<ElementContentList>(json['contentList']);
+	if (contentList != null) {
+		elementEntity.contentList = contentList;
 	}
 	final int? countComment = jsonConvert.convert<int>(json['countComment']);
 	if (countComment != null) {
@@ -43,21 +39,29 @@ ElementEntity $ElementEntityFromJson(Map<String, dynamic> json) {
 	if (createTime != null) {
 		elementEntity.createTime = createTime;
 	}
+	final String? ext = jsonConvert.convert<String>(json['ext']);
+	if (ext != null) {
+		elementEntity.ext = ext;
+	}
 	final int? id = jsonConvert.convert<int>(json['id']);
 	if (id != null) {
 		elementEntity.id = id;
+	}
+	final String? idLabels = jsonConvert.convert<String>(json['idLabels']);
+	if (idLabels != null) {
+		elementEntity.idLabels = idLabels;
 	}
 	final String? imageUrls = jsonConvert.convert<String>(json['imageUrls']);
 	if (imageUrls != null) {
 		elementEntity.imageUrls = imageUrls;
 	}
+	final String? intro = jsonConvert.convert<String>(json['intro']);
+	if (intro != null) {
+		elementEntity.intro = intro;
+	}
 	final int? isDelete = jsonConvert.convert<int>(json['isDelete']);
 	if (isDelete != null) {
 		elementEntity.isDelete = isDelete;
-	}
-	final int? isNew = jsonConvert.convert<int>(json['isNew']);
-	if (isNew != null) {
-		elementEntity.isNew = isNew;
 	}
 	final int? page = jsonConvert.convert<int>(json['page']);
 	if (page != null) {
@@ -71,10 +75,6 @@ ElementEntity $ElementEntityFromJson(Map<String, dynamic> json) {
 	if (softtype != null) {
 		elementEntity.softtype = softtype;
 	}
-	final int? sourceEid = jsonConvert.convert<int>(json['sourceEid']);
-	if (sourceEid != null) {
-		elementEntity.sourceEid = sourceEid;
-	}
 	final int? status = jsonConvert.convert<int>(json['status']);
 	if (status != null) {
 		elementEntity.status = status;
@@ -82,6 +82,10 @@ ElementEntity $ElementEntityFromJson(Map<String, dynamic> json) {
 	final String? tags = jsonConvert.convert<String>(json['tags']);
 	if (tags != null) {
 		elementEntity.tags = tags;
+	}
+	final String? title = jsonConvert.convert<String>(json['title']);
+	if (title != null) {
+		elementEntity.title = title;
 	}
 	final int? updateId = jsonConvert.convert<int>(json['updateId']);
 	if (updateId != null) {
@@ -112,31 +116,187 @@ ElementEntity $ElementEntityFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> $ElementEntityToJson(ElementEntity entity) {
 	final Map<String, dynamic> data = <String, dynamic>{};
-	data['audit'] = entity.audit;
-	data['auditId'] = entity.auditId;
-	data['auditName'] = entity.auditName;
-	data['auditTime'] = entity.auditTime;
+	data['categoryList'] =  entity.categoryList?.map((v) => v.toJson()).toList();
+	data['cnameList'] =  entity.cnameList;
+	data['contentList'] =  entity.contentList?.map((v) => v.toJson()).toList();
 	data['countComment'] = entity.countComment;
 	data['countEdit'] = entity.countEdit;
 	data['countSee'] = entity.countSee;
 	data['createId'] = entity.createId;
 	data['createName'] = entity.createName;
 	data['createTime'] = entity.createTime;
+	data['ext'] = entity.ext;
 	data['id'] = entity.id;
+	data['idLabels'] = entity.idLabels;
 	data['imageUrls'] = entity.imageUrls;
+	data['intro'] = entity.intro;
 	data['isDelete'] = entity.isDelete;
-	data['isNew'] = entity.isNew;
 	data['page'] = entity.page;
 	data['size'] = entity.size;
 	data['softtype'] = entity.softtype;
-	data['sourceEid'] = entity.sourceEid;
 	data['status'] = entity.status;
 	data['tags'] = entity.tags;
+	data['title'] = entity.title;
 	data['updateId'] = entity.updateId;
 	data['updateName'] = entity.updateName;
 	data['updateTime'] = entity.updateTime;
 	data['version'] = entity.version;
 	data['wid'] = entity.wid;
 	data['wname'] = entity.wname;
+	return data;
+}
+
+ElementCategoryList $ElementCategoryListFromJson(Map<String, dynamic> json) {
+	final ElementCategoryList elementCategoryList = ElementCategoryList();
+	final String? code = jsonConvert.convert<String>(json['code']);
+	if (code != null) {
+		elementCategoryList.code = code;
+	}
+	final int? id = jsonConvert.convert<int>(json['id']);
+	if (id != null) {
+		elementCategoryList.id = id;
+	}
+	final String? label = jsonConvert.convert<String>(json['label']);
+	if (label != null) {
+		elementCategoryList.label = label;
+	}
+	final String? pcode = jsonConvert.convert<String>(json['pcode']);
+	if (pcode != null) {
+		elementCategoryList.pcode = pcode;
+	}
+	final int? pid = jsonConvert.convert<int>(json['pid']);
+	if (pid != null) {
+		elementCategoryList.pid = pid;
+	}
+	final String? pidpath = jsonConvert.convert<String>(json['pidpath']);
+	if (pidpath != null) {
+		elementCategoryList.pidpath = pidpath;
+	}
+	final int? tier = jsonConvert.convert<int>(json['tier']);
+	if (tier != null) {
+		elementCategoryList.tier = tier;
+	}
+	final String? value = jsonConvert.convert<String>(json['value']);
+	if (value != null) {
+		elementCategoryList.value = value;
+	}
+	final int? wid = jsonConvert.convert<int>(json['wid']);
+	if (wid != null) {
+		elementCategoryList.wid = wid;
+	}
+	return elementCategoryList;
+}
+
+Map<String, dynamic> $ElementCategoryListToJson(ElementCategoryList entity) {
+	final Map<String, dynamic> data = <String, dynamic>{};
+	data['code'] = entity.code;
+	data['id'] = entity.id;
+	data['label'] = entity.label;
+	data['pcode'] = entity.pcode;
+	data['pid'] = entity.pid;
+	data['pidpath'] = entity.pidpath;
+	data['tier'] = entity.tier;
+	data['value'] = entity.value;
+	data['wid'] = entity.wid;
+	return data;
+}
+
+ElementContentList $ElementContentListFromJson(Map<String, dynamic> json) {
+	final ElementContentList elementContentList = ElementContentList();
+	final String? content = jsonConvert.convert<String>(json['content']);
+	if (content != null) {
+		elementContentList.content = content;
+	}
+	final int? createId = jsonConvert.convert<int>(json['createId']);
+	if (createId != null) {
+		elementContentList.createId = createId;
+	}
+	final String? createName = jsonConvert.convert<String>(json['createName']);
+	if (createName != null) {
+		elementContentList.createName = createName;
+	}
+	final String? createTime = jsonConvert.convert<String>(json['createTime']);
+	if (createTime != null) {
+		elementContentList.createTime = createTime;
+	}
+	final int? eid = jsonConvert.convert<int>(json['eid']);
+	if (eid != null) {
+		elementContentList.eid = eid;
+	}
+	final String? ext = jsonConvert.convert<String>(json['ext']);
+	if (ext != null) {
+		elementContentList.ext = ext;
+	}
+	final int? id = jsonConvert.convert<int>(json['id']);
+	if (id != null) {
+		elementContentList.id = id;
+	}
+	final int? isNew = jsonConvert.convert<int>(json['isNew']);
+	if (isNew != null) {
+		elementContentList.isNew = isNew;
+	}
+	final int? isUpdate = jsonConvert.convert<int>(json['isUpdate']);
+	if (isUpdate != null) {
+		elementContentList.isUpdate = isUpdate;
+	}
+	final int? page = jsonConvert.convert<int>(json['page']);
+	if (page != null) {
+		elementContentList.page = page;
+	}
+	final int? serial = jsonConvert.convert<int>(json['serial']);
+	if (serial != null) {
+		elementContentList.serial = serial;
+	}
+	final int? size = jsonConvert.convert<int>(json['size']);
+	if (size != null) {
+		elementContentList.size = size;
+	}
+	final int? status = jsonConvert.convert<int>(json['status']);
+	if (status != null) {
+		elementContentList.status = status;
+	}
+	final String? title = jsonConvert.convert<String>(json['title']);
+	if (title != null) {
+		elementContentList.title = title;
+	}
+	final int? updateId = jsonConvert.convert<int>(json['updateId']);
+	if (updateId != null) {
+		elementContentList.updateId = updateId;
+	}
+	final String? updateName = jsonConvert.convert<String>(json['updateName']);
+	if (updateName != null) {
+		elementContentList.updateName = updateName;
+	}
+	final String? updateTime = jsonConvert.convert<String>(json['updateTime']);
+	if (updateTime != null) {
+		elementContentList.updateTime = updateTime;
+	}
+	final int? wid = jsonConvert.convert<int>(json['wid']);
+	if (wid != null) {
+		elementContentList.wid = wid;
+	}
+	return elementContentList;
+}
+
+Map<String, dynamic> $ElementContentListToJson(ElementContentList entity) {
+	final Map<String, dynamic> data = <String, dynamic>{};
+	data['content'] = entity.content;
+	data['createId'] = entity.createId;
+	data['createName'] = entity.createName;
+	data['createTime'] = entity.createTime;
+	data['eid'] = entity.eid;
+	data['ext'] = entity.ext;
+	data['id'] = entity.id;
+	data['isNew'] = entity.isNew;
+	data['isUpdate'] = entity.isUpdate;
+	data['page'] = entity.page;
+	data['serial'] = entity.serial;
+	data['size'] = entity.size;
+	data['status'] = entity.status;
+	data['title'] = entity.title;
+	data['updateId'] = entity.updateId;
+	data['updateName'] = entity.updateName;
+	data['updateTime'] = entity.updateTime;
+	data['wid'] = entity.wid;
 	return data;
 }

@@ -123,7 +123,6 @@ CommentsEntity $CommentsEntityFromJson(Map<String, dynamic> json) {
 	if (isRecommend != null) {
 		commentsEntity.isRecommend = isRecommend;
 	}
-
 	return commentsEntity;
 }
 
@@ -158,5 +157,6 @@ Map<String, dynamic> $CommentsEntityToJson(CommentsEntity entity) {
 	data['upid'] = entity.upid;
 	data['wid'] = entity.wid;
 	data['wname'] = entity.wname;
+	data['isRecommend'] = entity.isRecommend;
 	return data;
 }

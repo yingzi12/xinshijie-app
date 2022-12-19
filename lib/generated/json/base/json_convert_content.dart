@@ -19,6 +19,8 @@ class JsonConvert {
 		(CommentsEntity).toString(): CommentsEntity.fromJson,
 		(DiscussEntity).toString(): DiscussEntity.fromJson,
 		(ElementEntity).toString(): ElementEntity.fromJson,
+		(ElementCategoryList).toString(): ElementCategoryList.fromJson,
+		(ElementContentList).toString(): ElementContentList.fromJson,
 		(WorldEntity).toString(): WorldEntity.fromJson,
 	};
 
@@ -109,6 +111,12 @@ class JsonConvert {
 		}
 		if(<ElementEntity>[] is M){
 			return data.map<ElementEntity>((Map<String, dynamic> e) => ElementEntity.fromJson(e)).toList() as M;
+		}
+		if(<ElementCategoryList>[] is M){
+			return data.map<ElementCategoryList>((Map<String, dynamic> e) => ElementCategoryList.fromJson(e)).toList() as M;
+		}
+		if(<ElementContentList>[] is M){
+			return data.map<ElementContentList>((Map<String, dynamic> e) => ElementContentList.fromJson(e)).toList() as M;
 		}
 		if(<WorldEntity>[] is M){
 			return data.map<WorldEntity>((Map<String, dynamic> e) => WorldEntity.fromJson(e)).toList() as M;

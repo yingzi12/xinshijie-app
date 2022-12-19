@@ -20,7 +20,7 @@ class CommentsDataUtils {
     Success? success,
     Fail? fail,
   }) {
-    HttpUtils.get(APIs.apiPrefix+CommentsAPIs.getList, parameters, success: success, fail: fail);
+    HttpUtils.get(APIs.apiPrefix+CommentsAPIs.getList, {},parameters, success: success, fail: fail);
   }
 
   /// 世界信息
@@ -30,7 +30,7 @@ class CommentsDataUtils {
         Success? success,
         Fail? fail,
       }) {
-    HttpUtils.get(APIs.apiPrefix+CommentsAPIs.getInfo+"/$wid",
+    HttpUtils.get(APIs.apiPrefix+CommentsAPIs.getInfo+"/$wid",{},
         {}, success: success, fail: fail);
   }
 }

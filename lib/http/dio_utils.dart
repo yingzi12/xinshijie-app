@@ -1,13 +1,10 @@
-///  dio_utils.dart
-///
-///  Created by iotjin on 2020/07/06.
-///  description:  dio 工具类
 
 import 'dart:convert';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:uuid/uuid.dart';
 import 'apis.dart';
 import 'error_handle.dart';
 import 'log_utils.dart';
@@ -93,7 +90,7 @@ class DioUtils {
   static final DioUtils _singleton = DioUtils._();
 
   static DioUtils get instance => DioUtils();
-
+  static var uuid = Uuid();
   static late Dio _dio;
 
   Dio get dio => _dio;

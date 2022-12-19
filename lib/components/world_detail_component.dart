@@ -53,7 +53,7 @@ class _WorldDetailComponentState extends State<WorldDetailComponent> {
     List<String> sourceList=widget.world.xSource!.split(";");
     List<Widget> tagList=_listView(sourceList);
     tagList.add( BrnStateTag(
-      tagText: widget.world.typeName,
+      tagText: widget.world.typeName??"",
       tagState: TagState.succeed,
     ));
     int rank= widget.world.ranks?? 0;

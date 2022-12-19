@@ -1,5 +1,6 @@
 import 'package:bruno/bruno.dart';
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:xinshijieapp/components/comment_component.dart';
 import 'package:xinshijieapp/components/world_detail_component.dart';
 import 'package:xinshijieapp/data/comments_data_utils.dart';
@@ -7,6 +8,7 @@ import 'package:xinshijieapp/data/world_data_utils.dart';
 import 'package:xinshijieapp/models/comments_entity.dart';
 import 'package:xinshijieapp/models/world_entity.dart';
 import 'package:xinshijieapp/models/world_model.dart';
+import 'package:xinshijieapp/screens/element_list_screen.dart';
 import 'package:xinshijieapp/utils/AppConstant.dart';
 
 import 'package:xinshijieapp/utils/AppWidget.dart';
@@ -40,12 +42,9 @@ class _WorldDetailScreenState extends State<WorldDetailScreen> {
   }
   void getWorldDatetail()  {
     WorldDataUtils.getDatetail(widget.wid, success: (res) {
-      print("==============world mode ============getDtail========2========");
       setState(() {
         world = WorldEntity.fromJson(res["data"]);
-        print("==============world mode ============getDtail========4========");
       });
-      print("==============world mode ============getDtail========3========");
     }, fail: (code, msg) {}
     );
   }
@@ -108,6 +107,7 @@ class _WorldDetailScreenState extends State<WorldDetailScreen> {
                           child:  GestureDetector(
                               onTap: () {
                                 setState(() {
+                                  ElementListScreen(wid: widget.wid).launch(context);
                                   // Navigator.push(
                                   //   context,
                                   //   MaterialPageRoute(

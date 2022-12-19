@@ -4,6 +4,7 @@
 ///  description:  网络请求工具类（dio二次封装）
 
 import 'package:dio/dio.dart';
+import 'package:uuid/uuid.dart';
 import 'package:xinshijieapp/components/jh_progress_hud.dart';
 import 'apis.dart';
 import 'dio_utils.dart';
@@ -19,6 +20,7 @@ const bool isOpenLog = true;
 const bool isOpenAllLog = false;
 
 class HttpUtils {
+
   /// dio main函数初始化
   static void initDio() {
     final List<Interceptor> interceptors = <Interceptor>[];
@@ -42,12 +44,13 @@ class HttpUtils {
   /// get 请求
   static void get<T>(
     String url,
+    Map<String, dynamic>? urlParams,
     Map<String, dynamic>? params, {
     String? loadingText,
     Success? success,
     Fail? fail,
   }) {
-    request(Method.get, url, params, loadingText: loadingText, success: success, fail: fail);
+    request(Method.get, url, urlParams,params, loadingText: loadingText, success: success, fail: fail);
   }
 
   /// post 请求
@@ -58,13 +61,14 @@ class HttpUtils {
     Success? success,
     Fail? fail,
   }) {
-    request(Method.post, url, params, loadingText: loadingText, success: success, fail: fail);
+    request(Method.post, url,{}, params, loadingText: loadingText, success: success, fail: fail);
   }
 
   /// _request 请求
   static void request<T>(
     Method method,
     String url,
+    Map<String, dynamic>? urlParams,
     params, {
     String? loadingText = '加载中...',
     Success? success,
@@ -80,6 +84,14 @@ class HttpUtils {
 
     var data;
     var queryParameters;
+    if(urlParams!.isNotEmpty){
+      url=url+"?resId="+DioUtils.uuid.v1()+"&";
+      urlParams.forEach( (key, value){
+        if(value != null && value != '') {
+          url = url + "$key=$value&";
+        }
+      } );
+    }
     if (method == Method.get) {
       queryParameters = params;
     }

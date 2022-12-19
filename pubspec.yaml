@@ -74,6 +74,11 @@ dependencies:
   rational: ^2.2.1
   #加解密
   encrypt: ^5.0.1
+  #显示html内容
+  flutter_html: ^3.0.0-alpha.6
+  flutter_html_all: ^3.0.0-alpha.6
+  #uuid
+  uuid: ^3.0.7
   bruno: ^3.1.0
 dev_dependencies:
   flutter_test:

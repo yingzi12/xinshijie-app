@@ -5,44 +5,44 @@ import 'dart:convert';
 @JsonSerializable()
 class WorldEntity {
 
-	int? id;
-	String? name;
-	String? description;
-	int? types;
-	dynamic typeName;
-	String? intro;
-	int? ranks;
-	int? vitality;
-	String? updateNewElement;
-	int? updateNewElementId;
-	int? scores;
-	int? countElement;
-	int? countResident;
+	int? countAddType;
 	int? countAdmin;
 	int? countComment;
+	int? countDiscuss;
+	int? countEdit;
+	int? countElement;
+	int? countFllow;
 	int? countLike;
+	int? countResident;
 	int? countSee;
-	String? createTime;
-	String? updateTime;
+	int? countStory;
+	int? createId;
 	String? createName;
-	String? createId;
-	String? updateName;
-	int? updateId;
-	int? status;
+	String? createTime;
+	String? description;
+	int? id;
 	String? imgUrl;
-	String? updateNewElementTime;
+	String? intro;
+	int? isPrive;
+	String? name;
+	int? ranks;
+	int? scores;
 	@JSONField(name: "source")
 	String? xSource;
-	int? isPrive;
-	int? countFllow;
-	int? countDiscuss;
-	int? countAddType;
-	int? countEdit;
-	int? countStory;
+	int? status;
+	String? typeName;
+	int? types;
+	int? updateId;
+	String? updateName;
+	String? updateNewElement;
+	int? updateNewElementId;
+	String? updateNewElementTime;
+	String? updateTime;
+	int? vitality;
   
   WorldEntity();
 
-	factory WorldEntity.fromJson(Map<String, dynamic> json) => $WorldEntityFromJson(json);
+  factory WorldEntity.fromJson(Map<String, dynamic> json) => $WorldEntityFromJson(json);
 
   Map<String, dynamic> toJson() => $WorldEntityToJson(this);
 
