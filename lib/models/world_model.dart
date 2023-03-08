@@ -1,19 +1,13 @@
-import 'package:xinshijieapp/common/ProfileChangeNotifier.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:xinshijieapp/data/world_data_utils.dart';
 import 'package:xinshijieapp/models/world_entity.dart';
 
-class WorldModel extends ProfileChangeNotifier {
-  // User get user => profile.user != null? profile.user:;
-
-
-
-  //用户信息发生变化，更新用户信息并通知依赖它的子孙Widgets更新
+class WorldModel extends ChangeNotifier  {
+   WorldEntity? _worldEntity;
+  //信息发生变化，信息并通知依赖它的子孙Widgets更新
   set world(WorldEntity world) {
-    // if (user?.login != profile.user?.login) {
-    //   profile.lastLogin = profile.user?.login;
-    //   profile.user = user;
-      notifyListeners();
-    // }
+    _worldEntity=world;
+    notifyListeners();
   }
 }
 
@@ -31,8 +25,7 @@ WorldEntity? getDtail(int wid){
   WorldEntity? world=null;
   WorldDataUtils.getDatetail(wid, success: (res) {
     print("==============world mode ============getDtail========2========");
-    world = WorldEntity.fromJson(res["data"]);
-      }, fail: (code, msg) {}
+    world = WorldEntity.fromJson(res["data"]);}, fail: (code, msg) {}
   );
   print("==============world mode ============getDtail========3========");
 

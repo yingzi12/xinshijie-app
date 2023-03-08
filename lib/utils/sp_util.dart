@@ -3,6 +3,8 @@ library sp_util;
 import 'dart:async';
 import 'dart:convert';
 
+//SharedPreferences是Android四种数据存储技术中的一种,它是一种轻型的数据存储方式,
+// 它的本质是基于XML文件存储key-value键值对数据,通常用来存储一些简单的配置信 息,其对象本身只能获取数据,
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:synchronized/synchronized.dart';
 

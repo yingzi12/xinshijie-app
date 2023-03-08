@@ -446,13 +446,16 @@ void showSnackBar(BuildContext context, String msg) {
     ),
   );
 }
-
-Padding EditTextField(var hintText, {isPassword = true}) {
+/***
+ * reminder:为空的提示
+ */
+Padding EditTextField(var hintText,var _textController, {isPassword = true,reminder}) {
   return Padding(
       padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: TextFormField(
         style: primaryTextStyle(size: 18),
         obscureText: isPassword,
+        controller: _textController,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(26, 18, 4, 18),
           hintText: hintText,
@@ -467,6 +470,10 @@ Padding EditTextField(var hintText, {isPassword = true}) {
             borderSide: BorderSide(color: editBackground, width: 0.0),
           ),
         ),
+        // 校验用户名（不能为空）
+        validator: (v) {
+            return v==null||v.trim().isNotEmpty ? null : reminder;
+            },
       ));
 }
 

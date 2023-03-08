@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:xinshijieapp/fragments/search_fragment.dart';
-// import 'package:xinshijieapp/fragments/world_fragment.dart';
 import 'package:xinshijieapp/fragments/account_fragment.dart';
-// import 'package:xinshijieapp/fragments/story_fragment.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import 'package:xinshijieapp/fragments/home_fragment.dart';

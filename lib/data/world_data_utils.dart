@@ -8,8 +8,6 @@ import 'package:xinshijieapp/http/world_apis.dart';
 import '/http/apis.dart';
 import '/http/http_utils.dart';
 
-typedef Success<T> = Function(T data);
-typedef Fail = Function(int code, String msg);
 
 class WorldDataUtils {
 
@@ -29,7 +27,7 @@ class WorldDataUtils {
         Success? success,
         Fail? fail,
       }) {
-    HttpUtils.get(APIs.apiPrefix+WorldAPIs.getWorldInfo+"/$wid",{},
+    HttpUtils.get("${APIs.apiPrefix}${WorldAPIs.getWorldInfo}/$wid",{},
         {}, success: success, fail: fail);
   }
 }

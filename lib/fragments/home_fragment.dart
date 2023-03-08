@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:xinshijieapp/components/home_service_component.dart';
 import 'package:xinshijieapp/components/popular_service_component.dart';
 import 'package:xinshijieapp/models/customer_details_model.dart';
@@ -9,7 +10,6 @@ import 'package:xinshijieapp/utils/AppColors.dart';
 import 'package:xinshijieapp/utils/AppImages.dart';
 import 'package:xinshijieapp/utils/AppWidget.dart';
 import 'package:xinshijieapp/main.dart';
-import 'package:xinshijieapp/utils/smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:xinshijieapp/utils/space.dart';
 
 class HomeFragment extends StatefulWidget {

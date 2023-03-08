@@ -6,6 +6,12 @@
 
 #import "GeneratedPluginRegistrant.h"
 
+#if __has_include(<audio_session/AudioSessionPlugin.h>)
+#import <audio_session/AudioSessionPlugin.h>
+#else
+@import audio_session;
+#endif
+
 #if __has_include(<connectivity_plus/ConnectivityPlusPlugin.h>)
 #import <connectivity_plus/ConnectivityPlusPlugin.h>
 #else
@@ -16,6 +22,12 @@
 #import <fluttertoast/FluttertoastPlugin.h>
 #else
 @import fluttertoast;
+#endif
+
+#if __has_include(<just_audio/JustAudioPlugin.h>)
+#import <just_audio/JustAudioPlugin.h>
+#else
+@import just_audio;
 #endif
 
 #if __has_include(<nb_utils/NbUtilsPlugin.h>)
@@ -30,16 +42,16 @@
 @import onesignal_flutter;
 #endif
 
-#if __has_include(<path_provider_ios/FLTPathProviderPlugin.h>)
-#import <path_provider_ios/FLTPathProviderPlugin.h>
+#if __has_include(<path_provider_foundation/PathProviderPlugin.h>)
+#import <path_provider_foundation/PathProviderPlugin.h>
 #else
-@import path_provider_ios;
+@import path_provider_foundation;
 #endif
 
-#if __has_include(<shared_preferences_ios/FLTSharedPreferencesPlugin.h>)
-#import <shared_preferences_ios/FLTSharedPreferencesPlugin.h>
+#if __has_include(<shared_preferences_foundation/SharedPreferencesPlugin.h>)
+#import <shared_preferences_foundation/SharedPreferencesPlugin.h>
 #else
-@import shared_preferences_ios;
+@import shared_preferences_foundation;
 #endif
 
 #if __has_include(<sqflite/SqflitePlugin.h>)
@@ -75,12 +87,14 @@
 @implementation GeneratedPluginRegistrant
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
+  [AudioSessionPlugin registerWithRegistrar:[registry registrarForPlugin:@"AudioSessionPlugin"]];
   [ConnectivityPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"ConnectivityPlusPlugin"]];
   [FluttertoastPlugin registerWithRegistrar:[registry registrarForPlugin:@"FluttertoastPlugin"]];
+  [JustAudioPlugin registerWithRegistrar:[registry registrarForPlugin:@"JustAudioPlugin"]];
   [NbUtilsPlugin registerWithRegistrar:[registry registrarForPlugin:@"NbUtilsPlugin"]];
   [OneSignalPlugin registerWithRegistrar:[registry registrarForPlugin:@"OneSignalPlugin"]];
-  [FLTPathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPathProviderPlugin"]];
-  [FLTSharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharedPreferencesPlugin"]];
+  [PathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"PathProviderPlugin"]];
+  [SharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"SharedPreferencesPlugin"]];
   [SqflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"SqflitePlugin"]];
   [FLTURLLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTURLLauncherPlugin"]];
   [FLTVideoPlayerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTVideoPlayerPlugin"]];

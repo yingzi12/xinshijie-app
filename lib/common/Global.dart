@@ -6,14 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xinshijieapp/models/CacheConfig.dart';
 import 'package:xinshijieapp/models/Profile.dart';
 import 'package:xinshijieapp/utils/CacheObject.dart';
-import 'package:xinshijieapp/utils/Git.dart';
 
 class Global {
   static late SharedPreferences _prefs;
   static Profile profile = Profile(cache: null);
   // 网络缓存对象
   static NetCache netCache = NetCache();
-
 
   // 是否为release版
   static bool get isRelease => bool.fromEnvironment("dart.vm.product");
@@ -30,12 +28,10 @@ class Global {
         print(e);
       }
     }
-
     // 如果没有缓存策略，设置默认缓存策略
     profile.cache = profile.cache ?? CacheConfig(enable: true,maxAge:3600, maxCount: 100,);
-
     //初始化网络请求相关配置
-    Git.init();
+    // Git.init();
   }
 
   // 持久化Profile信息

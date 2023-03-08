@@ -1,8 +1,7 @@
 
 import 'dart:convert';
-import 'dart:io';
+//这个插件允许 Flutter 应用程序发现网络连接并相应地配置自己。它可以区分蜂窝连接和 WiFi 连接。
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:uuid/uuid.dart';
 import 'apis.dart';
@@ -53,9 +52,6 @@ class DioUtils {
       },
       baseUrl: _baseUrl,
       headers: _httpHeaders,
-      connectTimeout: _connectTimeout,
-      receiveTimeout: _receiveTimeout,
-      sendTimeout: _sendTimeout,
     );
 
     _dio = Dio(options);
@@ -73,11 +69,11 @@ class DioUtils {
 //    };
 
     /// 测试环境忽略证书校验
-    if (!LogUtils.inProduction) {
-      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (HttpClient client) {
-        client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-      };
-    }
+    // if (!LogUtils.inProduction) {
+    //   (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (HttpClient client) {
+    //     client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+    //   };
+    // }
 
     /// 添加拦截器
     void addInterceptor(Interceptor interceptor) {

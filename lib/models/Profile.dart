@@ -1,3 +1,5 @@
+import 'package:xinshijieapp/models/user_entity.dart';
+
 import 'CacheConfig.dart';
 import 'user_model.dart';
 
@@ -16,7 +18,7 @@ class Profile {
     lastLogin = json['lastLogin'];
     locale = json['locale?'];
   }
-  User? user;
+  UserEntity? user;
   String? token;
   CacheConfig? cache;
   String? lastLogin;

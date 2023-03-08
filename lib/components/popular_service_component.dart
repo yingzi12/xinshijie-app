@@ -10,7 +10,7 @@ class PopularServiceComponent extends StatefulWidget {
 }
 
 class _PopularServiceComponentState extends State<PopularServiceComponent> {
-  late List<WorldEntity> worldRecommendedList;
+  List<WorldEntity>? worldRecommendedList;
 
   @override
   void initState() {
@@ -21,6 +21,7 @@ class _PopularServiceComponentState extends State<PopularServiceComponent> {
   void init() async {
     //获取世界推荐
    getWorldRecommendedList();
+   print("---------------PopularServiceComponent- init async-----------------");
   }
 
   @override
@@ -29,19 +30,35 @@ class _PopularServiceComponentState extends State<PopularServiceComponent> {
   }
 
   @override
+  void didUpdateWidget(covariant PopularServiceComponent oldWidget) {
+    print("-----------------PopularServiceComponent---- didUpdateWidget 1 --------------------");
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    print("-----------------PopularServiceComponent---- didUpdateWidget 2--------------------");
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if(worldRecommendedList == null){
+      print("---------------PopularServiceComponent- init build- 1- 结果为空---------------");
+      return Center(
+        child: Text('加载中...'),
+      );
+    }else{
+      print("---------------PopularServiceComponent- init build-2----有结果------------");
+    }
     return SizedBox(
       height: 125,
       child: ListView(
         padding: EdgeInsets.symmetric(horizontal: 8),
         scrollDirection: Axis.horizontal,
         children: List.generate(
-          worldRecommendedList.length,
+          worldRecommendedList!.length,
           (index) => GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => WorldDetailScreen(wid: worldRecommendedList[index].id ?? -1)),
+                MaterialPageRoute(builder: (context) => WorldDetailScreen(wid: worldRecommendedList?[index].id ?? -1)),
               );
             },
             child: Padding(
@@ -50,7 +67,7 @@ class _PopularServiceComponentState extends State<PopularServiceComponent> {
                 width: 110,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
-                  child: Image.network(aliyunImgUrl+(worldRecommendedList[index].imgUrl ?? ""), fit: BoxFit.cover),
+                  child: Image.network(aliyunImgUrl+(worldRecommendedList?[index].imgUrl ?? ""), fit: BoxFit.cover),
                 ),
               ),
             ),
@@ -62,7 +79,12 @@ class _PopularServiceComponentState extends State<PopularServiceComponent> {
 
   void getWorldRecommendedList()  {
     WorldDataUtils.getPageList({'pageNum': 1, 'pageSize': 6}, success: (res) {
-      worldRecommendedList = List<WorldEntity>.from(res['rows'].map((x) => WorldEntity.fromJson(x)));
+      setState(() {
+        worldRecommendedList =
+        List<WorldEntity>.from(res['rows'].map((x) => WorldEntity.fromJson(x)));
+        print("---------------PopularServiceComponent- getWorldRecommendedList setState 获取到结果-----------------");
+      });
+      print("---------------PopularServiceComponent- getWorldRecommendedList  获取到结果-----------------");
     }, fail: (code, msg) {});
   }
 

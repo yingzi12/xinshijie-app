@@ -2,12 +2,11 @@ import 'package:bruno/bruno.dart';
 import 'package:flutter/material.dart';
 import 'package:xinshijieapp/models/world_entity.dart';
 import 'package:xinshijieapp/utils/AppConstant.dart';
-import 'package:xinshijieapp/utils/badges/badges.dart';
 
 class WorldDetailComponent extends StatefulWidget {
 
-   WorldDetailComponent({Key? key,required this.world}) : super(key: key);
-   WorldEntity world;
+  WorldDetailComponent({Key? key,required this.world}) : super(key: key);
+  WorldEntity world;
   @override
   State<WorldDetailComponent> createState() => _WorldDetailComponentState();
 }
@@ -63,14 +62,14 @@ class _WorldDetailComponentState extends State<WorldDetailComponent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Badge(
-            badgeContent: Text(rank.toString()),
+            label: Text(rank.toString()),
             child: Text(
-            widget.world.name ?? "",
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 14.0,
+              widget.world.name ?? "",
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 14.0,
+              ),
             ),
-          ),
           ),
           const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
           Text(
@@ -130,7 +129,7 @@ class _WorldDetailComponentState extends State<WorldDetailComponent> {
 
 
   List<Widget> _listView(List<String> sourList){
-   return sourList.map((f)=>
+    return sourList.map((f)=>
         BrnStateTag(
           tagText: f,
           tagState: TagState.succeed,

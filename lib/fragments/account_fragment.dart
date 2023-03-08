@@ -4,23 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:xinshijieapp/models/customer_details_model.dart';
 import 'package:xinshijieapp/models/user_model.dart';
 import 'package:xinshijieapp/screens/sign_in_screen.dart';
-// import 'package:xinshijieapp/screen/manager/world/mw_world_list_screen.dart';
 import 'package:xinshijieapp/utils/AppColors.dart';
 import 'package:xinshijieapp/utils/AppConstant.dart';
-// import 'package:xinshijieapp/utils/AppWidgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-// import 'package:xinshijieapp/fragments/bookings_fragment.dart';
-// import 'package:xinshijieapp/model/customer_details_model.dart';
-// import 'package:xinshijieapp/screen/favourite_services_screen.dart';
-// import 'package:xinshijieapp/screen/my_profile_screen.dart';
-// import 'package:xinshijieapp/screen/notification_screen.dart';
-import 'package:xinshijieapp/utils/AppColors.dart';
 import 'package:xinshijieapp/utils/AppImages.dart';
 import 'package:xinshijieapp/main.dart';
 import 'package:xinshijieapp/utils/AppWidget.dart';
 import 'package:xinshijieapp/utils/space.dart';
 
-// import '../custom_widget/space.dart';
 
 class AccountFragment extends StatefulWidget {
   const AccountFragment({Key? key}) : super(key: key);

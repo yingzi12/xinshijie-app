@@ -4,8 +4,6 @@
 ///  description:  网络请求工具类（dio二次封装）
 
 import 'package:dio/dio.dart';
-import 'package:uuid/uuid.dart';
-import 'package:xinshijieapp/components/jh_progress_hud.dart';
 import 'apis.dart';
 import 'dio_utils.dart';
 import 'error_handle.dart';
@@ -99,29 +97,29 @@ class HttpUtils {
       data = params;
     }
 
-    if (loadingText != null && loadingText.isNotEmpty) {
-      JhProgressHUD.showLoadingText(loadingText);
-    }
+    // if (loadingText != null && loadingText.isNotEmpty) {
+    //   JhProgressHUD.showLoadingText(loadingText);
+    // }
     DioUtils.instance.request(method, url, data: data, queryParameters: queryParameters, onSuccess: (result) {
       if (!LogUtils.inProduction && isOpenLog) {
         print('---------- HttpUtils response ----------');
         print(result);
       }
-      if (loadingText != null && loadingText.isNotEmpty) {
-        JhProgressHUD.hide();
-      }
+      // if (loadingText != null && loadingText.isNotEmpty) {
+      //   JhProgressHUD.hide();
+      // }
       if (result['code'] == ExceptionHandle.success) {
         success?.call(result);
       } else {
         // 其他状态，弹出错误提示信息
-        JhProgressHUD.showText(result['msg']);
+        // JhProgressHUD.showText(result['msg']);
         fail?.call(result['code'], result['msg']);
       }
     }, onError: (code, msg) {
       if (loadingText != null && loadingText.isNotEmpty) {
-        JhProgressHUD.hide();
+        // JhProgressHUD.hide();
       }
-      JhProgressHUD.showError(msg);
+      // JhProgressHUD.showError(msg);
       fail?.call(code, msg);
     });
   }

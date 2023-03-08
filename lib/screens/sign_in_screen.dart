@@ -1,174 +1,267 @@
-// import 'package:country_calling_code_picker/picker.dart';
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'package:nb_utils/nb_utils.dart';
-// import 'package:my_app2/screen/otp_verification_screen.dart';
-import 'package:xinshijieapp/screens/sign_up_screen.dart';
-import 'package:xinshijieapp/main.dart';
-import 'package:xinshijieapp/utils/AppColors.dart';
-import 'package:xinshijieapp/utils/AppConstant.dart';
+import 'package:provider/provider.dart';
+import 'package:xinshijieapp/data/captcha_data_utils.dart';
+import 'package:xinshijieapp/data/login_data_utils.dart';
+import 'package:xinshijieapp/models/captcha_entity.dart';
+import 'package:xinshijieapp/models/user_entity.dart';
+import 'package:xinshijieapp/models/user_model.dart';
 import 'package:xinshijieapp/utils/AppImages.dart';
-import 'package:xinshijieapp/utils/space.dart';
-
+import 'package:xinshijieapp/utils/AppWidget.dart';
 
 class SignInScreen extends StatefulWidget {
-  SignInScreen({Key? key}) : super(key: key);
+  static var tag = "/SignIn";
+
+  const SignInScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  SignInScreenState createState() => SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
-  final _loginFormKey = GlobalKey<FormState>();
-  double screenHeight = 0.0;
-  double screenWidth = 0.0;
-
-  // Country? _selectedCountry;
+class SignInScreenState extends State<SignInScreen> {
+  bool passwordVisible = false;
+  bool? isRemember = false;
+  TextEditingController _unameController = TextEditingController();
+  TextEditingController _pwdController = TextEditingController();
+  TextEditingController _codeController = TextEditingController();
+  GlobalKey _formKey = GlobalKey<FormState>();
+  CaptchaEntity? captchaEntity;
 
   @override
   void initState() {
-    initCountry();
     super.initState();
+    init();
+    passwordVisible = false;
+  }
+  void init() async {
+    getCaptchaCode();
+    print("---------------获取验证码-----------------");
   }
 
-  void initCountry() async {
-    // final country = await getDefaultCountry(context);
-    // _selectedCountry = country;
-    setState(() {});
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
   }
-
-  bool checkPhoneNumber(String phoneNumber) {
-    String regexPattern = r'^(?:[+0][1-9])?[0-9]{10,12}$';
-    var regExp = RegExp(regexPattern);
-
-    if (phoneNumber.isEmpty) {
-      return false;
-    } else if (regExp.hasMatch(phoneNumber)) {
-      return true;
-    }
-    return false;
-  }
-
-  // void _showCountryPicker() async {
-  //   final country = await showCountryPickerSheet(context);
-  //   if (country != null) {
-  //     setState(() {
-  //       _selectedCountry = country;
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
-    screenHeight = MediaQuery.of(context).size.height;
-    screenWidth = MediaQuery.of(context).size.width;
-
-    return AnnotatedRegion(
-      value: SystemUiOverlayStyle(statusBarIconBrightness: appStore.isDarkModeOn ? Brightness.light : Brightness.dark),
-      child: Scaffold(
-        body: SingleChildScrollView(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Space(60),
-                  Text("Welcome back!", style: TextStyle(fontSize: mainTitleTextSize, fontWeight: FontWeight.bold)),
-                  Space(8),
-                  Text("Please Login to your account", style: TextStyle(fontSize: 14, color: subTitle)),
-                  Space(16),
-                  Image.asset(jitu, width: 100, height: 100, fit: BoxFit.cover),
-                ],
-              ),
-              Space(70),
-              Form(
-                key: _loginFormKey,
-                child: TextFormField(
-                  keyboardType: TextInputType.phone,
-                  style: TextStyle(fontSize: 16),
-                  inputFormatters: [LengthLimitingTextInputFormatter(10)],
-                  // decoration:
-                  // commonInputDecoration(
-                  //   hintText: "Enter mobile number",
-                  //   prefixIcon: Padding(
-                  //     padding: EdgeInsets.all(16),
-                  //     child: GestureDetector(
-                  //       // onTap: () => _showCountryPicker(),
-                  //       // child: Text(
-                  //       //   _selectedCountry == null ? "+91" : _selectedCountry!.callingCode,
-                  //       //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  //       // ),
-                  //     ),
-                  //   ),
-                  // ),
-                ),
-              ),
-              Space(16),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.all(16),
-                    textStyle: TextStyle(fontSize: 16),
-                    shape: StadiumBorder(),
-                    backgroundColor: appStore.isDarkModeOn ? Colors.grey.withOpacity(0.2) : Colors.black,
-                  ),
-                  onPressed: () {
-                    if (_loginFormKey.currentState!.validate()) {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => OTPVerificationScreen()),
-                      // );
-                    }
-                  },
-                  child: Text("Log In", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white)),
-                ),
-              ),
-              Space(32),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: [
-                    Expanded(child: Divider(thickness: 1.2, color: Colors.grey.withOpacity(0.2))),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-                      child: Text("Or Login With", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+    changeStatusColor(Colors.transparent);
+    return Scaffold(
+      body: Observer(
+        builder: (_) => Container(
+          color: context.scaffoldBackgroundColor,
+          height: MediaQuery.of(context).size.height,
+          child: SingleChildScrollView(
+              child: Form(
+                key: _formKey, //设置globalKey，用于后面获取FormState
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      height: (MediaQuery.of(context).size.height) / 3.5,
+                      child: Stack(
+                        children: <Widget>[
+                          Image.asset(book_image, fit: BoxFit.fill, width: MediaQuery.of(context).size.width),
+                          Container(
+                            margin: EdgeInsets.only(left: 16),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("Welcome", style: boldTextStyle(size: 40, color: white)),
+                                SizedBox(height: 4),
+                                Text("Back!", style: boldTextStyle(size: 34, color: white))
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                    Expanded(child: Divider(thickness: 1.2, color: Colors.grey.withOpacity(0.2))),
-                  ],
-                ),
-              ),
-              Space(32),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(jitu, scale: 24, color: appStore.isDarkModeOn ? white : black),
-                  Space(40),
-                  Image.asset(jitu, scale: 24, color: appStore.isDarkModeOn ? white : black),
-                ],
-              ),
-              Space(32),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Don't have account?", style: TextStyle(fontSize: 16)),
-                    Space(4),
-                    Text('Sign Up', style: boldTextStyle()),
+                    Container(
+                      alignment: Alignment.topRight,
+                      margin: EdgeInsets.only(right: 45),
+                      transform: Matrix4.translationValues(0.0, -40.0, 0.0),
+                      child: Image.asset(child_image, height: 70, width: 70),
+                    ),
+                    EditTextField("请输入电子邮箱或者账号", _unameController, isPassword: false,reminder:"电子邮箱/账号不能为空"),
+                    SizedBox(height: 16),
+                    EditTextField("请输入密码", _pwdController,isPassword: true,reminder:"密码不能为空"),
+                    SizedBox(height: 16),
+                    msgCode(context,_codeController),
+                    SizedBox(height: 14),
+                    Container(
+                      margin: EdgeInsets.only(left: 16),
+                      child: Row(
+                        children: <Widget>[
+                          CustomTheme(
+                            child: Checkbox(
+                              focusColor: Color(0xFFfc4a1a),
+                              activeColor: Color(0xFFfc4a1a),
+                              value: isRemember,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  isRemember = value;
+                                });
+                              },
+                            ),
+                          ),
+                          Text("Remember", style: secondaryTextStyle(size: 16))
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 14),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                      child: Builder(builder: (context){
+                        return AppButton(text: "Sign In" ,
+                          color: Colors.green, // Optional
+                          onTap: () {
+                            // 通过_formKey.currentState 获取FormState后，
+                            // 调用validate()方法校验用户名密码是否合法，校验
+                            // 通过后再提交数据。
+                            if ((_formKey.currentState as FormState).validate()) {
+                              login(_unameController.text,_pwdController.text,_codeController.text);
+                            }
+                          },);},
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Text("Forgot Password?", style: secondaryTextStyle(size: 16)),
+                    SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text("Don\'t have an account?", style: primaryTextStyle()),
+                        Container(
+                          margin: EdgeInsets.only(left: 4),
+                          child: GestureDetector(child: Text("Sign Up", style: TextStyle(fontSize: 18.0, decoration: TextDecoration.underline, color: Color(0xFFfc4a1a))), onTap: () {}),
+                        )
+                      ],
+                    ),
                   ],
                 ),
               )
-            ],
           ),
         ),
       ),
     );
+  }
+
+  Widget msgCode(BuildContext context,var _textController){
+    return Padding(
+        padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        textBaseline: TextBaseline.ideographic,
+        children: <Widget>[
+          const Text('验证码',style: TextStyle(fontSize: 13,color: Color(0xff333333))),
+          Expanded(
+            child: Padding(padding: const EdgeInsets.only(left: 15,right: 15),
+              child: TextFormField(
+                maxLines: 1,
+                controller: _textController,
+                onSaved: (value) { },
+                // controller: mController,
+                textAlign: TextAlign.start,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),    //只允许输入0-9的数字
+                  LengthLimitingTextInputFormatter(6)                     //最大输入长度为6
+                ],
+                decoration: const InputDecoration(
+                  hintText: ('填写验证码'),
+                  // fillColor: Colors.red,  //设置TextFormField背景颜色
+                  // filled: true,
+                  contentPadding: EdgeInsets.only(top: 25,bottom: 0),
+                  hintStyle: TextStyle(
+                    color: Color(0xff999999),
+                    fontSize: 13,
+                  ),
+                  alignLabelWithHint: true,
+                  border: OutlineInputBorder(borderSide: BorderSide.none),
+                ),
+                // 校验用户名（不能为空）
+                validator: (v) {
+                  return v==null||v.trim().isNotEmpty ? null : "验证码不能为空";
+                },
+              ),),
+          ),
+          SizedBox(
+            width: 120,
+            child: TextButton(
+              onPressed: (){getCaptchaCode();},
+              child:getImage()
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void login(var username,var password,var code)  {
+    LoginDataUtils.login({"username":username,"password":password,"code":code,"uuid":captchaEntity?.uuid?? ""}, success: (res) {
+       var code=res["code"];
+       if(code == 200){
+         UserEntity userEntity=UserEntity.fromJson(res["user"]);
+         Provider.of<UserModel>(context, listen: false).user(userEntity);
+       }else{
+         getCaptchaCode();
+       }
+    }, fail: (code, msg) {});
+    //验证通过提交数据
+    showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title:const Text( "确定提交吗"),
+            content: const Text('Proceed with destructive action?'),
+            actions: <CupertinoDialogAction>[
+              CupertinoDialogAction(
+                /// This parameter indicates this action is the default,
+                /// and turns the action's text to bold text.
+                isDefaultAction: true,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('No'),
+              ),
+              CupertinoDialogAction(
+                /// This parameter indicates the action would perform
+                /// a destructive action such as deletion, and turns
+                /// the action's text color to red.
+                isDestructiveAction: true,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Yes'),
+              ),
+            ],
+          );
+        });
+  }
+
+  Widget getImage(){
+    if(captchaEntity==null ){
+      return const Text("加载中");
+    }else{
+      return Image.memory( Base64Decoder().convert((captchaEntity?.img?? "")));
+    }
+
+  }
+  void getCaptchaCode()  {
+    CaptchaDataUtils.getCode(success: (res) {
+      setState(() {
+        captchaEntity = CaptchaEntity.fromJson(res);
+        print("---------------获取验证码获取到结果-----------------");
+      });
+      print("---------------获取验证码获取到结果t  获取到结果-----------------");
+    }, fail: (code, msg) {});
   }
 }

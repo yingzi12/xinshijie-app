@@ -36,50 +36,54 @@ dependencies:
   cupertino_icons: ^1.0.5
   #一个列表，其中包含以编程方式滚动到项目的辅助方法。
   scrollable_positioned_list: ^0.3.5
-  flutter_svg: ^1.1.6
-  google_fonts: ^3.0.1
+  flutter_svg: ^2.0.2
+  google_fonts: ^4.0.3
   #
-  flutter_vector_icons: 2.0.0
+  flutter_vector_icons: ^2.0.0
   #访问后台
-  dio: ^4.0.6
+  dio: ^5.0.1
   # lru缓存库
-  dio_cache_interceptor: ^3.3.1
+  dio_cache_interceptor: ^3.4.0
   #状态管理
-  provider: ^6.0.4
+  provider: ^6.0.5
   #小工具包
-  nb_utils: ^4.6.25
-  #缓存图片
-  cached_network_image: ^3.2.2
+  nb_utils: ^5.0.5  #缓存图片
+  cached_network_image: ^3.2.3
   #MobX 是一个用于响应式管理应用程序状态的库。使用可观察对象、动作和反应的力量来增强您的 Dart 和 Flutter 应用程序
-  mobx: ^2.1.3
+  mobx: ^2.1.4
   #提供 Observer widget，它监听 observables 并在发生变化时自动重建。
   flutter_mobx: ^2.0.6+5
   #信息推送
   onesignal_flutter: ^3.4.2
   #数据持久化
   shared_preferences: ^2.0.15
-  html: ^0.15.1
-  url_launcher: ^6.1.7
+  html: ^0.15.2
+  url_launcher: ^6.1.10
   #Dart 中的统一形式表示。 Formz 旨在以通用方式简化表单表示和验证。
-  formz: ^0.4.0
-  json_serializable: ^6.5.4
+  formz: ^0.5.0+1
+  json_serializable: ^6.6.1
   #为了能够在Dart中比较对象，通常需要重写==操作符和hashCode。
   #它不仅冗长乏味，而且如果不这样做，就会导致代码的效率低下，不能像我们预期的那样运行。
   #默认情况下，如果两个对象是同一个实例，==返回true。
   equatable: ^2.0.5
-  #弹出框
-  bot_toast: ^4.0.3
+  #弹出框 未知错误
+#  bot_toast: ^4.0.3
+#  fluttertoast: ^8.1.2
   #对十进制进行计算,防止失去精度
   decimal: ^2.3.1
   rational: ^2.2.1
   #加解密
   encrypt: ^5.0.1
   #显示html内容
-  flutter_html: ^3.0.0-alpha.6
-  flutter_html_all: ^3.0.0-alpha.6
+#  flutter_html: ^3.0.0-alpha.6
+#  flutter_html_all: ^3.0.0-alpha.6
   #uuid
   uuid: ^3.0.7
-  bruno: ^3.1.0
+  bruno: ^3.3.0
+  #上标文字图案
+  badges: ^3.0.2
+  #轮播
+  smooth_page_indicator: ^1.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -100,7 +104,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
   mocktail: ^0.3.0
   equatable: ^2.0.5
-
+  flutter_widget_from_html: ^0.10.0
 flutter:
 
   # The following line ensures that the Material Icons font is

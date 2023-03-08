@@ -1,7 +1,4 @@
-///  data_utils.dart
-///
-///  Created by iotjin on 2021/04/01.
-///  description:  项目数据请求 管理类
+
 
 import 'package:xinshijieapp/http/comments_apis.dart';
 import 'package:xinshijieapp/http/world_apis.dart';
