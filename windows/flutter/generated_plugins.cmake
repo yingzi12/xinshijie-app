@@ -4,7 +4,10 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
+  flutter_localization
   nb_utils
+  pasteboard
+  rive_common
   url_launcher_windows
 )
 

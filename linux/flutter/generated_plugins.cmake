@@ -3,7 +3,9 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  flutter_localization
   nb_utils
+  pasteboard
   url_launcher_linux
 )
 

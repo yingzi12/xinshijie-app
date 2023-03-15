@@ -207,44 +207,12 @@ class SignInScreenState extends State<SignInScreen> {
 
   void login(var username,var password,var code)  {
     LoginDataUtils.login({"username":username,"password":password,"code":code,"uuid":captchaEntity?.uuid?? ""}, success: (res) {
-       var code=res["code"];
-       if(code == 200){
          UserEntity userEntity=UserEntity.fromJson(res["user"]);
          Provider.of<UserModel>(context, listen: false).user(userEntity);
-       }else{
-         getCaptchaCode();
-       }
-    }, fail: (code, msg) {});
-    //验证通过提交数据
-    showCupertinoDialog(
-        context: context,
-        builder: (context) {
-          return CupertinoAlertDialog(
-            title:const Text( "确定提交吗"),
-            content: const Text('Proceed with destructive action?'),
-            actions: <CupertinoDialogAction>[
-              CupertinoDialogAction(
-                /// This parameter indicates this action is the default,
-                /// and turns the action's text to bold text.
-                isDefaultAction: true,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('No'),
-              ),
-              CupertinoDialogAction(
-                /// This parameter indicates the action would perform
-                /// a destructive action such as deletion, and turns
-                /// the action's text color to red.
-                isDestructiveAction: true,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Yes'),
-              ),
-            ],
-          );
-        });
+    }, fail: (code, msg) {
+      getCaptchaCode();
+    });
+
   }
 
   Widget getImage(){

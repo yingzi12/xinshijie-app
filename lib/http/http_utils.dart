@@ -4,6 +4,8 @@
 ///  description:  网络请求工具类（dio二次封装）
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'apis.dart';
 import 'dio_utils.dart';
 import 'error_handle.dart';
@@ -113,12 +115,31 @@ class HttpUtils {
       } else {
         // 其他状态，弹出错误提示信息
         // JhProgressHUD.showText(result['msg']);
+        Fluttertoast.showToast(
+            msg: result['msg'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
         fail?.call(result['code'], result['msg']);
       }
     }, onError: (code, msg) {
       if (loadingText != null && loadingText.isNotEmpty) {
+        Fluttertoast.cancel();
         // JhProgressHUD.hide();
       }
+      Fluttertoast.showToast(
+          msg: msg,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
       // JhProgressHUD.showError(msg);
       fail?.call(code, msg);
     });

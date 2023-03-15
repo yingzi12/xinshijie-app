@@ -12,9 +12,9 @@ import 'package:xinshijieapp/utils/AppWidget.dart';
 import 'package:xinshijieapp/utils/space.dart';
 
 class WorldCommnetScreen extends StatefulWidget {
-  WorldCommnetScreen({Key? key,required this.wid}) : super(key: key);
+  WorldCommnetScreen({Key? key,required this.wid,required this.pageNum}) : super(key: key);
   int wid;
-
+  int pageNum;
   @override
   State<WorldCommnetScreen> createState() => _WorldCommnetScreenState();
 }
@@ -36,7 +36,7 @@ class _WorldCommnetScreenState extends State<WorldCommnetScreen> {
     getCommentsList();
   }
   void getCommentsList()  {
-    CommentsDataUtils.getPageList({'pageNum': 1, 'pageSize': 6,'wid':widget.wid}, success: (res) {
+    CommentsDataUtils.getPageList({'pageNum':widget.pageNum, 'pageSize': 10,'wid':widget.wid}, success: (res) {
       setState(() {
         commentsList = List<CommentsEntity>.from(
             res['rows'].map((x) => CommentsEntity.fromJson(x)));
@@ -69,15 +69,11 @@ class _WorldCommnetScreenState extends State<WorldCommnetScreen> {
     }else{
       print("---------------_WorldCommnetScreen- build and commentsList not -----------------");
     }
-    return Column(
-                  children: _listView(commentsList!),
-                );
-
-  }
-
-  List<Widget> _listView(List<CommentsEntity> list){
-    return list.map((f)=>
-        CommentComponet(comments: f),
-    ).toList();
+    return   ListView.builder(
+      itemBuilder: (context, i) =>  CommentComponet(comments: commentsList![i]),
+      itemCount: commentsList!.length,
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+    );
   }
 }

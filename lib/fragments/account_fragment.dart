@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:xinshijieapp/models/customer_details_model.dart';
+import 'package:xinshijieapp/http/apis.dart';
 import 'package:xinshijieapp/models/user_model.dart';
 import 'package:xinshijieapp/screens/sign_in_screen.dart';
 import 'package:xinshijieapp/utils/AppColors.dart';
@@ -46,9 +46,9 @@ class _AccountFragmentState extends State<AccountFragment> {
           automaticallyImplyLeading: false,
           centerTitle: true,
           elevation: 0,
-          backgroundColor: transparent,
+          // backgroundColor: transparent,
           title: Text(
-            "Account",
+            userModel.userEntity?.userName?? "",
             textAlign: TextAlign.center,
             style: TextStyle(fontWeight: FontWeight.w900,
                 fontSize: 20,
@@ -61,16 +61,18 @@ class _AccountFragmentState extends State<AccountFragment> {
             children: [
               SizedBox(height: 90,
                   width: 90,
-                  child: CircleAvatar(backgroundImage: AssetImage(jitu))),
+                  child: CircleAvatar(
+                      backgroundImage:AssetImage(jitu),//背景图，相当于加载中或加载失败的占位图
+                      child: Image.network(APIs.imageUrlPrefix+(userModel.userEntity?.avatar??"")))
+              ),
               Space(8),
-              Text(getName, textAlign: TextAlign.start,
+              Text(userModel.userEntity?.nickName?? "", textAlign: TextAlign.start,
                   style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20)),
               Space(4),
-              Text(getEmail, textAlign: TextAlign.start,
-                  style: TextStyle(color: secondaryColor, fontSize: 12)),
+              Text(userModel.userEntity?.email?? "无", textAlign: TextAlign.start,
+                  style: TextStyle(color: appTextColorSecondary, fontSize: 12)),
               Space(16),
-              // titleText("管理", textColor: appStore.textPrimaryColor, fontSize: textSizeNormal, fontFamily: fontBold),
-              // SizedBox(height: 10),
+
               Padding(
                 padding: EdgeInsets.only(left: 10.0, right: 10),
                 child: Row(

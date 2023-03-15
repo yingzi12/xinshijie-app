@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:xinshijieapp/main.dart';
 import 'package:xinshijieapp/models/services_model.dart';
+import 'package:xinshijieapp/test/nested_scroll_view.dart';
 import 'package:xinshijieapp/utils/AppColors.dart';
 import 'package:xinshijieapp/utils/space.dart';
 
@@ -38,10 +39,11 @@ class _HomeServiceComponentState extends State<HomeServiceComponent> {
           serviceProviders.length,
           (index) => GestureDetector(
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => ServiceProvidersScreen(index: index)),
-              // );
+              Navigator.push(
+                context,
+                // MaterialPageRoute(builder: (context) => ServiceProvidersScreen(index: index)),
+                  MaterialPageRoute(builder: (context) =>(serviceProviders[index].widget)),
+                  );
               for (var i = 0; i < serviceProviders.length; i++) {
                 if (i == index) {
                   serviceProviders[i].isSelected = true;
@@ -59,7 +61,7 @@ class _HomeServiceComponentState extends State<HomeServiceComponent> {
                     borderRadius: BorderRadius.circular(40),
                     child: Container(
                       padding: EdgeInsets.all(16),
-                      color: serviceProviders[index].isSelected ? blackColor : textFieldColor,
+                      color: serviceProviders[index].isSelected ? blackColor : Colors.green,
                       child: Observer(
                         builder: (context) {
                           return Icon(

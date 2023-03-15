@@ -311,7 +311,7 @@ Widget nbAppButtonWidget(BuildContext context, String text, Function onTap) {
   return AppButton(
     text: text,
     textStyle: boldTextStyle(color: white),
-    color: primaryColor,
+    color: appColorPrimary,
     onTap: onTap,
     width: context.width(),
   ).cornerRadiusWithClipRRect(20);
@@ -384,11 +384,11 @@ Widget placeHolderWidget({double? height, double? width, BoxFit? fit, AlignmentG
 InputDecoration commonInputDecoration({String? hintText, Widget? prefixIcon, Widget? suffixIcon}) {
   return InputDecoration(
     filled: true,
-    fillColor: textFieldColor,
+    fillColor: appTextColorSecondary,
     hintText: hintText,
     prefixIcon: prefixIcon,
     suffixIcon: suffixIcon,
-    hintStyle: TextStyle(color: hintTextColor, fontSize: 16),
+    hintStyle: TextStyle(color: appTextColorHint, fontSize: 16),
     contentPadding: EdgeInsets.symmetric(horizontal: 16),
     border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide.none),
   );
@@ -408,7 +408,7 @@ Widget homeTitleWidget({
         Text(titleText!, style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18)),
         TextButton(
           child: Text(
-            viewAllText ?? "所有",
+            viewAllText ?? "更多",
             style: TextStyle(color: viewAllColor, fontSize: 16, fontWeight: FontWeight.normal),
           ),
           onPressed: onAllTap!,

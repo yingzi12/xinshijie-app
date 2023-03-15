@@ -1,0 +1,114 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:xinshijieapp/main.dart';
+import 'package:xinshijieapp/screens/comment_list_screen.dart';
+import 'package:xinshijieapp/screens/world/world_comment_screen.dart';
+import 'package:xinshijieapp/screens/world/world_intro_screen.dart';
+
+import 'package:xinshijieapp/utils/AppWidget.dart';
+import 'package:xinshijieapp/utils/space.dart';
+
+class WorldDetailScreen extends StatefulWidget {
+  WorldDetailScreen({Key? key,required this.wid}) : super(key: key);
+  int wid;
+
+  @override
+  State<WorldDetailScreen> createState() => _WorldDetailScreenState();
+}
+
+class _WorldDetailScreenState extends State<WorldDetailScreen> {
+
+  @override
+  void initState() {
+    print("---------------_WorldDetailScreenState- initState-----------------");
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant WorldDetailScreen oldWidget) {
+    print("-----------------_WorldDetailScreenState---- didUpdateWidget 1 --------------------");
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    print("-----------------_WorldDetailScreenState---- didUpdateWidget 2--------------------");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      appBar: AppBar(
+        //导航栏
+        title: Text("世界信息"),
+        actions: <Widget>[
+          //导航栏右侧菜单
+          IconButton(icon: const Icon(Icons.share), onPressed: () {}),
+        ],
+      ),
+      body:SafeArea(
+        child: Stack(
+            fit: StackFit.expand,
+            children: [
+              SingleChildScrollView(
+                padding: const EdgeInsets.only(bottom: 60),
+                child: Column(
+                  children: <Widget>[
+                    WorldIntroScreen(wid: widget.wid),
+                    Space(8),
+                    homeTitleWidget(
+                      titleText: "评论",
+                      onAllTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CommentListScreen(wid:widget.wid,),
+                          ),
+                        );
+                      },
+                    ),
+                    WorldCommnetScreen(wid:widget.wid,pageNum: 1),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  width: width,
+                  height: MediaQuery.of(context).size.width * 0.15,
+                  color: appStore.isDarkModeOn ? Color(0xFF1C1F26) : Color(0xFFF8F7F7),
+                  padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.insert_emoticon, color: Color(0xFF747474)),
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: TextFormField(
+                          style: TextStyle(fontSize: 16.0, fontFamily: 'Regular'),
+                          decoration: InputDecoration(hintText: "Type a message", border: InputBorder.none),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      // Icon(
+                      //   Icons.send_outlined,
+                      // ),
+                      SvgPicture.asset("images/icons/social_send.svg"),
+                      SizedBox(width: 8),
+                      Row(
+                        children: <Widget>[
+                          SvgPicture.asset("images/icons/social_attachment.svg"),
+                          SizedBox(width: 8),
+                          SvgPicture.asset("images/icons/social_mic_line.svg"),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ]
+        ),
+      ),
+    );
+  }
+}

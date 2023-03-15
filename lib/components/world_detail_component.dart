@@ -121,7 +121,6 @@ class _WorldDetailComponentState extends State<WorldDetailComponent> {
               ),
             ],
           ),
-
         ],
       ),
     );

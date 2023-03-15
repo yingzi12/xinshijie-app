@@ -84,9 +84,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
               home: AppSplashScreen(),
-              theme: !appStore.isDarkModeOn
-                  ? AppThemeData.lightTheme
-                  : AppThemeData.darkTheme,
+              theme:  AppThemeData.lightTheme,
               routes: routes(),
               navigatorKey: navigatorKey,
               scrollBehavior: SBehavior(),
