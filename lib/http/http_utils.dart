@@ -23,6 +23,7 @@ class HttpUtils {
 
   /// dio main函数初始化
   static void initDio() {
+    print("HttpUtils 函数初始化");
     final List<Interceptor> interceptors = <Interceptor>[];
 
     /// 统一添加身份验证请求头
@@ -50,7 +51,7 @@ class HttpUtils {
     Success? success,
     Fail? fail,
   }) {
-    request(Method.get, url, urlParams,params, loadingText: loadingText, success: success, fail: fail);
+    request(Method.get, APIs.apiPrefix+url, urlParams,params, loadingText: loadingText, success: success, fail: fail);
   }
 
   /// post 请求
@@ -61,7 +62,7 @@ class HttpUtils {
     Success? success,
     Fail? fail,
   }) {
-    request(Method.post, url,{}, params, loadingText: loadingText, success: success, fail: fail);
+    request(Method.post, APIs.apiPrefix+url,{}, params, loadingText: loadingText, success: success, fail: fail);
   }
 
   /// _request 请求
@@ -81,7 +82,6 @@ class HttpUtils {
       print('---------- HttpUtils params ----------');
       print(params);
     }
-
     var data;
     var queryParameters;
     if(urlParams!.isNotEmpty){

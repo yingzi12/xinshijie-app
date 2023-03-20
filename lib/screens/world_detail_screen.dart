@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:xinshijieapp/components/comment_component.dart';
 import 'package:xinshijieapp/data/comments_data_utils.dart';
 import 'package:xinshijieapp/models/comments_entity.dart';
+import 'package:xinshijieapp/models/user_model.dart';
 import 'package:xinshijieapp/screens/world/world_intro_screen.dart';
 import 'package:xinshijieapp/utils/AppColors.dart';
 import 'package:xinshijieapp/utils/AppWidget.dart';
@@ -26,7 +28,7 @@ class WorldDetailScreenState extends State<WorldDetailScreen>
   int pageNum = 1;
 
   late EasyRefreshController _controller;
-
+  TextEditingController _commentController = new TextEditingController();
   List<CommentsEntity> commentsList=[];
 
   @override
@@ -37,7 +39,6 @@ class WorldDetailScreenState extends State<WorldDetailScreen>
       controlFinishLoad: true,
     );
     init();
-
   }
 
   @override
@@ -69,6 +70,7 @@ class WorldDetailScreenState extends State<WorldDetailScreen>
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
+    UserModel userModel = Provider.of<UserModel>(context);
     final themeData = Theme.of(context);
     return Scaffold(
       body: ExtendedNestedScrollView(
@@ -165,12 +167,46 @@ class WorldDetailScreenState extends State<WorldDetailScreen>
                         const SizedBox(width: 16),
                         Expanded(
                           child: TextFormField(
+                            controller: _commentController,
                             style: TextStyle(fontSize: 16.0, fontFamily: 'Regular'),
                             decoration: InputDecoration(hintText: "Type a message", border: InputBorder.none),
                           ),
                         ),
                         SizedBox(width: 8),
-                        SvgPicture.asset("images/icons/social_send.svg"),
+                        //添加点击事件
+                        InkWell(
+                          child:  SvgPicture.asset("images/icons/social_send.svg"),
+                          onTap: (){
+                              if(userModel == null){
+                                //TODO 给出错误提示
+                              }else {
+                                if (_commentController.text != null) {
+                                  CommentsEntity addEntity = new CommentsEntity();
+                                  addEntity.wid = widget.wid;
+                                  addEntity.source = 1;
+                                  addEntity.comment = _commentController.text;
+                                  addEntity.pid = 0;
+                                  if (_commentController.text.length > 5) {
+                                    CommentsDataUtils.add(
+                                        addEntity, success: (res) {
+                                      // setState(() {
+                                      //   commentsList = List<CommentsEntity>.from(
+                                      //       res['rows'].map((x) => CommentsEntity.fromJson(x)));
+                                      // });
+                                      //TODO 给出评论成功提示
+                                    }, fail: (code, msg) {
+                                      //TODO 给出错误提示
+                                    });
+                                    _commentController.text = "";
+                                  } else {
+                                    //TODO 给出错误提示
+                                  }
+                                } else {
+                                  //TODO 给出错误提示
+                                }
+                              }
+                          },
+                        ),
                         SizedBox(width: 8),
                         Row(
                           children: <Widget>[

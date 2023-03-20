@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -13,7 +14,7 @@ class CommentScreen extends StatefulWidget {
     categoryName: 'Sports',
     title: 'NHL roundup: Mika Zibanejad\'s record night powers Rangers',
     date: '20 jan 2021',
-    image: "jitu",
+    image: jitu,
     details: details,
     time: '40:18',
     isBookmark: true,

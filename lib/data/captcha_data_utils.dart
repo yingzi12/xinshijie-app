@@ -8,7 +8,7 @@ class CaptchaDataUtils {
         Success? success,
         Fail? fail,
       }) {
-    HttpUtils.get(APIs.apiPrefix+APIs.getCode,
+    HttpUtils.get(APIs.getCode,
         {},{}, success: success, fail: fail);
   }
 }

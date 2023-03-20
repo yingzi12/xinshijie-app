@@ -92,6 +92,7 @@ class JhAESStorageUtils {
 class JhStorageUtils {
   /// 存 String
   static Future<bool>? saveString(String key, String value) {
+    print("JhStorageUtils saveString :");
     return SpUtil.putString(key, value);
   }
 

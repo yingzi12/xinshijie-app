@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:xinshijieapp/models/comments_entity.dart';
 import 'package:xinshijieapp/screens/CommentScreen.dart';
+import 'package:xinshijieapp/screens/ReplyCommentScreen.dart';
 import 'package:xinshijieapp/screens/comment_dateil_screen.dart';
 import 'package:xinshijieapp/utils/AppConstant.dart';
 
@@ -15,6 +16,7 @@ class CommentComponet extends StatefulWidget {
 }
 
 class _CommentComponetState extends State<CommentComponet> {
+
   @override
   void didUpdateWidget(covariant CommentComponet oldWidget) {
     print(
@@ -91,7 +93,7 @@ class _CommentComponetState extends State<CommentComponet> {
                     icon: Icon(Icons.favorite_border),
                     onPressed: () {
                       finish(context);
-                      CommentScreen().launch(context);
+                      ReplyCommentScreen(comments:this.widget.comments,).launch(context);
                     },
                     label: Text(widget.comments.countLike.toString()),
                   ),
@@ -104,7 +106,7 @@ class _CommentComponetState extends State<CommentComponet> {
                     icon: Icon(Icons.chat_bubble_outline),
                     onPressed: () {
                       finish(context);
-                      CommentDetailScreen().launch(context);
+                      CommentDetailScreen(comments:this.widget.comments).launch(context);
                     },
                     label: Text(widget.comments.countReply.toString()),
                   ),

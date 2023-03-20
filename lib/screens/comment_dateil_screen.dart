@@ -1,5 +1,6 @@
 import 'package:bruno/bruno.dart';
 import 'package:flutter/material.dart';
+import 'package:xinshijieapp/models/comments_entity.dart';
 import 'package:xinshijieapp/screens/CommentComponent.dart';
 import 'package:xinshijieapp/screens/CommentReplyComponent.dart';
 import 'package:xinshijieapp/screens/keepalive.dart';
@@ -7,8 +8,8 @@ import 'package:xinshijieapp/utils/AppImages.dart';
 import 'package:xinshijieapp/utils/space.dart';
 
 class CommentDetailScreen extends StatefulWidget {
-  const CommentDetailScreen({Key? key}) : super(key: key);
-
+  CommentDetailScreen({Key? key, required this.comments}) : super(key: key);
+  CommentsEntity comments;
   @override
   State<CommentDetailScreen> createState() => _CommentDetailScreenState();
 }

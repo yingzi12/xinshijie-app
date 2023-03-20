@@ -3,9 +3,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xinshijieapp/http/http_utils.dart';
 import 'package:xinshijieapp/models/CacheConfig.dart';
 import 'package:xinshijieapp/models/Profile.dart';
 import 'package:xinshijieapp/utils/CacheObject.dart';
+import 'package:xinshijieapp/utils/sp_util.dart';
 
 class Global {
   static late SharedPreferences _prefs;
@@ -31,7 +33,8 @@ class Global {
     // 如果没有缓存策略，设置默认缓存策略
     profile.cache = profile.cache ?? CacheConfig(enable: true,maxAge:3600, maxCount: 100,);
     //初始化网络请求相关配置
-    // Git.init();
+    HttpUtils.initDio();
+    SpUtil.getInstance();
   }
 
   // 持久化Profile信息

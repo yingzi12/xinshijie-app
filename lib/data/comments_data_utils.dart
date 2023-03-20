@@ -17,17 +17,38 @@ class CommentsDataUtils {
     Success? success,
     Fail? fail,
   }) {
-    HttpUtils.get(APIs.apiPrefix+CommentsAPIs.getList, {},parameters, success: success, fail: fail);
+    HttpUtils.get(CommentsAPIs.getList, {},parameters, success: success, fail: fail);
   }
 
-  /// 世界信息
+  /// 火盆评论详细
   static void getDatetail<T>(
       wid,
       {
         Success? success,
         Fail? fail,
       }) {
-    HttpUtils.get(APIs.apiPrefix+CommentsAPIs.getInfo+"/$wid",{},
+    HttpUtils.get(CommentsAPIs.getInfo+"/$wid",{},
         {}, success: success, fail: fail);
+  }
+  ///添加评论
+  static void add<T>(
+      params,
+      {
+        Success? success,
+        Fail? fail,
+      }) {
+    HttpUtils.post(CommentsAPIs.add,params,
+         success: success, fail: fail);
+  }
+
+  ///添加评论
+  static void reply<T>(
+      params,
+      {
+        Success? success,
+        Fail? fail,
+      }) {
+    HttpUtils.post(CommentsAPIs.reply,params,
+        success: success, fail: fail);
   }
 }

@@ -9,6 +9,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:xinshijieapp/data/captcha_data_utils.dart';
 import 'package:xinshijieapp/data/login_data_utils.dart';
+import 'package:xinshijieapp/http/intercept.dart';
 import 'package:xinshijieapp/models/captcha_entity.dart';
 import 'package:xinshijieapp/models/user_entity.dart';
 import 'package:xinshijieapp/models/user_model.dart';
@@ -208,6 +209,8 @@ class SignInScreenState extends State<SignInScreen> {
   void login(var username,var password,var code)  {
     LoginDataUtils.login({"username":username,"password":password,"code":code,"uuid":captchaEntity?.uuid?? ""}, success: (res) {
          UserEntity userEntity=UserEntity.fromJson(res["user"]);
+         setToken(res["token"]);
+         setRefreshToken(res["token"]);
          Provider.of<UserModel>(context, listen: false).user(userEntity);
     }, fail: (code, msg) {
       getCaptchaCode();

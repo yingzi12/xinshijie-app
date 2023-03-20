@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:xinshijieapp/test/easy_refresh/ERMain.dart';
 import 'package:xinshijieapp/test/extended_nested_scroll_view_exam/ENSCVMain.dart';
+import 'package:xinshijieapp/test/fluttertoast/FlutterToastMain.dart';
 import 'package:xinshijieapp/test/head2_list_vice.dart';
 import 'package:xinshijieapp/test/head_list_comment_vice.dart';
 import 'package:xinshijieapp/test/head_list_vice.dart';
@@ -65,6 +66,7 @@ List<TheamTestModel> getServices() {
   list.add(TheamTestModel(5, "reasy refresh ", "刷新框架 reasy refresh demo",  ERMain()));
   list.add(TheamTestModel(6, "quill", "富文本编辑器", QuillMainStreen()));
   list.add(TheamTestModel(7, "html test", "显示html内容", HtmlTestStreen()));
+  list.add(TheamTestModel(8, " Flutter Toast", "信息提示框", FlutterToastMain()));
 
   return list;
 }

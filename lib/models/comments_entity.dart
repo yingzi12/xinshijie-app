@@ -36,7 +36,7 @@ class CommentsEntity {
 	int? wid;
 	String? wname;
 	int? isRecommend;
-  
+	int? source;
   CommentsEntity();
 
   factory CommentsEntity.fromJson(Map<String, dynamic> json) => $CommentsEntityFromJson(json);

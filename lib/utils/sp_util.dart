@@ -8,13 +8,6 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:synchronized/synchronized.dart';
 
-/**
- * @Author: Sky24n
- * @GitHub: https://github.com/Sky24n
- * @Email: sky24no@gmail.com
- * @Date: 2018/9/8
- * @Description: Sp Util.
- */
 
 /// SharedPreferences Util.
 class SpUtil {
@@ -23,6 +16,8 @@ class SpUtil {
   static Lock _lock = Lock();
 
   static Future<SpUtil?> getInstance() async {
+    //SharedPreferences初始化
+    print("SharedPreferences初始化");
     if (_singleton == null) {
       await _lock.synchronized(() async {
         if (_singleton == null) {
@@ -40,6 +35,7 @@ class SpUtil {
   SpUtil._();
 
   Future _init() async {
+    print("SharedPreferences初始化 _init");
     _prefs = await SharedPreferences.getInstance();
   }
 
@@ -94,6 +90,7 @@ class SpUtil {
 
   /// put string.
   static Future<bool>? putString(String key, String value) {
+    print("_prefs setString :");
     return _prefs?.setString(key, value);
   }
 

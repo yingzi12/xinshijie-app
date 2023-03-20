@@ -28,14 +28,8 @@ class _AccountFragmentState extends State<AccountFragment> {
   late var height;
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    height = MediaQuery
-        .of(context)
-        .size
-        .height;
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     UserModel userModel = Provider.of<UserModel>(context);
     if (!userModel.isLogin) {
       //用户未登录，显示登录按钮

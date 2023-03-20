@@ -108,6 +108,27 @@ class DioUtils {
         _onError(ExceptionHandle.net_error, '网络异常，请检查你的网络！', onError);
         return;
       }
+      if(Method.get == method){
+        _dio.options.headers["content-type"]=	"application/x-www-form-urlencoded;charset=UTF-8";
+        _dio.options.headers["Accept"]=	"*/*";
+      }
+
+      if(Method.post == method){
+        _dio.options.headers["Accept"]=	"application/json,*/*";
+        _dio.options.headers["content-type"]=	"application/json;charset=UTF-8";
+      }
+      print("-----------url---------");
+      print(url);
+      print("-----------data---------");
+      print(data);
+      print("-----------queryParameters---------");
+      print(queryParameters);
+      print("-----------cancelToken---------");
+      print(cancelToken);
+      print("-----------month---------");
+      print(method);
+      print("-----------_dio.options---------");
+      print(_dio.options);
       final Response response = await _dio.request<T>(
         url,
         data: data,
@@ -115,6 +136,10 @@ class DioUtils {
         options: _checkOptions(MethodValues[method], options),
         cancelToken: cancelToken,
       );
+      print("-----------response---------");
+      print(response);
+      print("-----------response.data---------");
+      print(response.data);
       onSuccess?.call(response.data);
     } on DioError catch (e) {
       _cancelLogPrint(e, url);

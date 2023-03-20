@@ -11,7 +11,7 @@ class LoginDataUtils {
         Success? success,
         Fail? fail,
       }) {
-    HttpUtils.post(APIs.apiPrefix+APIs.login,
+    HttpUtils.post(APIs.login,
         params, success: success, fail: fail);
   }
 }

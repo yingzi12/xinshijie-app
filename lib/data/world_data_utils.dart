@@ -17,7 +17,7 @@ class WorldDataUtils {
     Success? success,
     Fail? fail,
   }) {
-    HttpUtils.get(APIs.apiPrefix+WorldAPIs.getWorldList, {},parameters, success: success, fail: fail);
+    HttpUtils.get(WorldAPIs.getWorldList, {},parameters, success: success, fail: fail);
   }
 
   /// 世界信息
@@ -27,7 +27,7 @@ class WorldDataUtils {
         Success? success,
         Fail? fail,
       }) {
-    HttpUtils.get("${APIs.apiPrefix}${WorldAPIs.getWorldInfo}/$wid",{},
+    HttpUtils.get("${WorldAPIs.getWorldInfo}/$wid",{},
         {}, success: success, fail: fail);
   }
 }

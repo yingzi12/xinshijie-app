@@ -16,11 +16,15 @@ const String kRefreshTokenUrl = APIs.refreshToken;
 
 String getToken() {
   var token = JhStorageUtils.getString('accessToken') ?? TOKEN;
+  print("获取token是否成功:"+token);
   return token;
 }
 
 void setToken(accessToken) {
+  print("设置token:"+accessToken);
   JhStorageUtils.saveString('accessToken', accessToken);
+  print("设置token成功");
+
 }
 
 String getRefreshToken() {
@@ -36,12 +40,16 @@ void setRefreshToken(refreshToken) {
 class AuthInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    if (options.path != APIs.login) {
+    print("AuthInterceptor 拦截器:"+options.path+"  urlPath:"+options.uri.path);
+
+    if (options.uri.path != APIs.login) {
       final String accessToken = getToken();
       if (accessToken.isNotEmpty) {
         options.headers['Authorization'] = 'Bearer $accessToken';
+        options.headers['token'] = 'Bearer $accessToken';
       }
     }
+    print("AuthInterceptor 拦截器 下一步");
     super.onRequest(options, handler);
   }
 }
@@ -51,6 +59,8 @@ class TokenInterceptor extends QueuedInterceptor {
   Dio? _tokenDio;
 
   Future<Map<String, dynamic>?> refreshTokenRequest() async {
+    print("TokenInterceptor 拦截器:");
+
     var params = {'accessToken': getToken(), 'refreshToken': getRefreshToken()};
     try {
       _tokenDio ??= Dio();

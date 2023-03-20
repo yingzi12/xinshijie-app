@@ -4,11 +4,18 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
+  dart_vlc
+  dynamic_color
   flutter_localization
+  flutter_meedu_videoplayer
+  fullscreen_window
   nb_utils
   pasteboard
   rive_common
+  screen_brightness_windows
+  screen_retriever
   url_launcher_windows
+  window_manager
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
