@@ -94,7 +94,8 @@ class FlutterTreePro extends StatefulWidget {
 class _FlutterTreeProState extends State<FlutterTreePro> {
   ///
   Map<String, dynamic> sourceTreeMap = {};
-
+  ///  source data type List 历史被选中的数据
+  List<Map<String, dynamic>> listOldData= <Map<String, dynamic>>[];
   ///
   bool checkedBox = false;
 
@@ -319,6 +320,15 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
   /// @desc 选中帅选框
   selectCheckedBox(Map<String, dynamic> dataModel) {
     int checked = dataModel['checked']!;
+    //新增逻辑,判断是否只能选择一个的关键
+    if(widget.isMultiple == false){
+      logger.i("选中复选框 selectCheckedBox  listOldData:$listOldData");
+      // logger.i("选中老复选框 selectCheckedBox 325 listOldData: $listOldData");
+      for(var item  in listOldData){
+        updateNodeNotSelected(item);
+      }
+      listOldData.clear();
+    }
     if ((dataModel[widget.config.children] ?? []).isNotEmpty) {
       var stack = MStack();
       stack.push(dataModel);
@@ -385,6 +395,9 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
     var set = Set.from(checkedList);
     var set2 = Set.from(list1);
     List<Map<String, dynamic>> filterList = List.from(set.difference(set2));
+    if(widget.isMultiple == false) {
+      listOldData.addAll(filterList);
+    }
     widget.onChecked(filterList);
     // var submitList = filterList
     //     .map(
@@ -437,6 +450,17 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
       updateParentNode(par);
     }
   }
+
+  /// 当时重新选中,更新历史选中的状态为未选中
+  updateNodeNotSelected(Map<String, dynamic> dataModel) {
+    var data = treeMap[dataModel[widget.config.id]];
+    data['checked'] = 0;
+    for (var item in (data[widget.config.children] ?? [])) {
+      updateNodeNotSelected(item);
+    }
+    // logger.i("updateNodeNotSelected data:$data");
+  }
+
 
   @override
   Widget build(BuildContext context) {
