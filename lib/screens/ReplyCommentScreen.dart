@@ -1,13 +1,16 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:bruno/bruno.dart';
 import 'package:easy_refresh/easy_refresh.dart';
+import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
 import 'package:xinshijieapp/data/comments_data_utils.dart';
 import 'package:xinshijieapp/main.dart';
 import 'package:xinshijieapp/models/comments_entity.dart';
-import 'package:xinshijieapp/screens/CommentReplyComponent.dart';
-import 'package:xinshijieapp/utils/AppImages.dart';
+import 'package:xinshijieapp/models/user_model.dart';
+import 'package:xinshijieapp/utils/AppColors.dart';
 
 class ReplyCommentScreen extends StatefulWidget {
   ReplyCommentScreen({Key? key, required this.comments}) : super(key: key);
@@ -24,8 +27,8 @@ class ReplyCommentScreenState extends State<ReplyCommentScreen> {
   late EasyRefreshController _controller;
   TextEditingController _commentController = new TextEditingController();
 
-  DateFormat timeFormat = DateFormat('hh:mm');
-  DateFormat dateFormat = DateFormat('MMM dd,yyyy');
+  // DateFormat timeFormat = DateFormat('hh:mm');
+  // DateFormat dateFormat = DateFormat('MMM dd,yyyy');
   @override
   void initState() {
     super.initState();
@@ -62,135 +65,208 @@ class ReplyCommentScreenState extends State<ReplyCommentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    UserModel userModel = Provider.of<UserModel>(context);
+    final themeData = Theme.of(context);
     return Scaffold(
-      appBar: nbAppBarWidget(context, title: '回复'),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            reverse: true,
-            child: Column(
-              children: [
-                16.height,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(widget.comments.nickname!, style: boldTextStyle(color:  Color(0xFFFD5530))),
-                        Text(widget.comments.comment!, style: boldTextStyle()),
-                      ],
-                    ).expand(flex: 2),
-                  ],
-                ),
-                16.height,
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: ScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: AssetImage(commentList[index].circleUrl!),
-                          radius: 30,
-                        ),
-                        16.width,
-                        Column(
+      body: ExtendedNestedScrollView(
+          onlyOneScrollInBody: true,
+          //pinnedHeaderSliverHeightBuilder: 在pinnedHeaderSliverHeightBuilder回调中设置全部pinned的header的高度， demo里面高度为 状态栏高度+SliverAppbar的高度
+          pinnedHeaderSliverHeightBuilder: () {
+            return MediaQuery.of(context).padding.top + kToolbarHeight;
+          },
+          ///headerSliverBuilder: 在内部滚动视图之前的任何小部件的构建器(由[body]给出)。
+          ///通常这是用来创建[SliverAppBar]与[TabBar]。
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return <Widget>[
+              const SliverAppBar(
+                pinned: true,
+                title: Text('回复',style:TextStyle(color: appTextColorPrimary)),
+              ),
+              SliverToBoxAdapter(
+                child: Container(
+                  alignment: Alignment.center,
+                  // height: 100,
+                  child:
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('${commentList[index].nickname}', style: boldTextStyle()),
-                            4.height,
-                            getReplay(commentList[index]),
-                            // Text('${commentList[index].comment}', style: primaryTextStyle()),
-                            8.height,
-                            Row(
-                              children: [
-                                Text('${commentList[index].createTime}', style: secondaryTextStyle(color: grey.withOpacity(0.5))),
-                              ],
+                            CircleAvatar(
+                              backgroundImage: AssetImage(widget.comments.circleUrl!),
+                              radius: 20,
                             ),
-                          ],
-                        ).expand(),
-                      ],
-                    ).paddingSymmetric(vertical: 8);
-                  },
-                  separatorBuilder: (BuildContext context, int index) => Divider(),
-                  itemCount: commentList.length,
+                            Text(widget.comments.nickname!, style: boldTextStyle(color:  Color(0xFFFD5530))),
+                          ]),
+                      Text(widget.comments.comment!, style: boldTextStyle()),
+                    ],
+                  ).expand(flex: 2).paddingLeft(16),
                 ),
-              ],
-            ).paddingOnly(left: 16, right: 16, bottom: 60),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Row(
+              ),
+            ];
+          },
+          body: SafeArea(
+            child:
+            Stack(
+              fit: StackFit.expand,
               children: [
-                AppTextField(
-                  controller: _commentController,
-                  textFieldType: TextFieldType.OTHER,
-                  textStyle: primaryTextStyle(),
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(borderSide: BorderSide(style: BorderStyle.none)),
-                    focusedBorder: OutlineInputBorder(borderSide: BorderSide(style: BorderStyle.none)),
-                    filled: true,
-                    hintText: 'Add Comment',
-                    hintStyle: primaryTextStyle(),
-                    fillColor: appStore.isDarkModeOn ? black : Colors.grey.shade200,
-                  ),
-                  cursorColor: Color(0xFFFD5530),
-                ).expand(),
-                Container(
-                  height: 60,
-                  width: 60,
-                  child: Icon(Icons.send, color: white),
-                  color: black,
-                ).onTap(
-                  () {
-                    // setState(
-                    //   () {
-                        if (_commentController.text.isNotEmpty) {
-                          if(_commentController.text.length>5) {
-                            CommentsEntity addEntity=new CommentsEntity();
-                            addEntity.wid=widget.comments.wid;
-                            addEntity.source=1;
-                            addEntity.comment = _commentController.text;
-                            addEntity.upid=widget.comments.id;
-                            CommentsDataUtils.reply(addEntity, success: (res) {
-                              setState(() {
-                                commentList.add(addEntity);
-                                // commentsList = List<CommentsEntity>.from(
-                                //     res['rows'].map((x) => CommentsEntity.fromJson(x)));
-                              });
-                              //TODO 给出评论成功提示
-                            }, fail: (code, msg) {
-                              //TODO 给出错误提示
-                            });
-                            // commentList.add(addEntity);
-                            // commentList.add(
-                              // NBCommentItemModel(
-                              //   image: jitu,
-                              //   name: 'XYZ',
-                              //   message: commentController.text,
-                              //   date: dateFormat.format(DateTime.now()),
-                              //   time: timeFormat.format(DateTime.now()),
-                              // ),
-                            // );
-                            _commentController.text="";
-                          }else{
-                            //TODO 给出错误提示
+                Column(
+                    children: <Widget>[
+                      // homeTitleWidget(titleText: "评论", onAllTap: () {},),
+                      Expanded(child:
+                      EasyRefresh(
+                        controller: _controller,
+                        header: BezierCircleHeader(
+                          foregroundColor: themeData.scaffoldBackgroundColor,
+                          backgroundColor: themeData.colorScheme.primary,
+                        ),
+                        onRefresh: () async {
+                          print("调用onRefresh");
+                          await Future.delayed(const Duration(seconds: 2));
+                          if (!mounted) {
+                            return;
                           }
-                        }
-                      // },
-                    // );
-                    // _commentController.text = '';
-                  },
+                          setState(() {
+                            pageNum = 1;
+                            _count=0;
+                            commentList.clear();
+                            getCommentsList();
+                            // _count = 10;
+                          });
+                          _controller.finishRefresh();
+                          _controller.resetFooter();
+                        },
+                        onLoad: () async {
+                          print("调用onLoad");
+                          await Future.delayed(const Duration(seconds: 2));
+                          if (!mounted) {
+                            return;
+                          }
+                          setState(() {
+                            pageNum +=1;
+                            getCommentsList();
+                          });
+                          _controller.finishLoad(
+                              _count >= 20 ? IndicatorResult.noMore : IndicatorResult.success);
+                        },
+                        child: ListView.builder(
+                          clipBehavior: Clip.none,
+                          padding: EdgeInsets.zero,
+                          itemCount: _count,
+                          itemBuilder: (ctx, index) {
+                            print("调用ListView count:"+_count.toString()+" index:"+index.toString());
+                            return   getComment(commentList![index] ,userModel);
+                          },
+                        ),
+                      ),
+                      ),
+                    ]),
+                Positioned(
+                  bottom: 0,
+                  child: Container(
+                    width: width,
+                    height: MediaQuery.of(context).size.width * 0.15,
+                    color: Colors.green ,
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Icon(Icons.insert_emoticon, color: Color(0xFF747474)),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _commentController,
+                            style: TextStyle(fontSize: 16.0, fontFamily: 'Regular'),
+                            decoration: InputDecoration(hintText: "Type a message", border: InputBorder.none),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        //添加点击事件
+                        InkWell(
+                          child:  SvgPicture.asset("images/icons/social_send.svg"),
+                          onTap: (){
+                            if(userModel == null){
+                              //TODO 给出错误提示
+                              showDialog<void>(
+                                context: context,
+                                barrierDismissible: true,
+                                builder: (BuildContext dialogContext) {
+                                  return BrnDialog(messageText: "请登录之后在评论");
+                                },
+                              );
+                            }else {
+                              if (_commentController.text != null) {
+                                CommentsEntity addEntity = new CommentsEntity();
+                                addEntity.wid = widget.comments.wid;
+                                addEntity.source = 1;
+                                addEntity.comment = _commentController.text;
+                                addEntity.upid=widget.comments.id;
+                                if (_commentController.text.length > 5) {
+                                  CommentsDataUtils.reply(
+                                      addEntity, success: (res) {
+                                    showDialog<void>(
+                                      context: context,
+                                      barrierDismissible: true,
+                                      builder: (BuildContext dialogContext) {
+                                        return BrnDialog(messageText: "评论成功");
+                                      },
+                                    );
+                                    //TODO 给出评论成功提示
+                                  }, fail: (code, msg) {
+                                    BrnDialogManager.showSingleButtonDialog(context,
+                                      label: "确定",
+                                      title: '错误',
+                                      warning: msg,
+                                    );
+                                    //TODO 给出错误提示
+                                  });
+                                  _commentController.text = "";
+                                } else {
+                                  //TODO 给出错误提示
+                                  BrnDialogManager.showSingleButtonDialog(context,
+                                    label: "确定",
+                                    warning: '评论长度不能小于5',
+                                  );
+                                }
+                              } else {
+                                BrnDialogManager.showSingleButtonDialog(context,
+                                  label: "确定",
+                                  // title: '标题内容',
+                                  warning: '请输入评论内容',
+                                  // message: "辅助内容信息辅助内容信息辅助内容信息辅助内容信息辅助内容信息。", onTap: () {
+                                  //   BrnToast.show('知道了', context);
+                                  // }
+                                );
+                                //TODO 给出错误提示
+                              }
+                            }
+                          },
+                        ),
+                        SizedBox(width: 8),
+                        Row(
+                          children: <Widget>[
+                            SvgPicture.asset("images/icons/social_attachment.svg"),
+                            SizedBox(width: 8),
+                            SvgPicture.asset("images/icons/social_mic_line.svg"),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ],
-            ),
-          ),
-        ],
-      ).withHeight(context.height()),
+            ),)
+      ),
+    );
+  }
+  // 构建 header
+  Widget buildHeader(int i) {
+    return Container(
+      color: Colors.lightBlue.shade200,
+      alignment: Alignment.centerLeft,
+      child: Text("PersistentHeader $i"),
     );
   }
 
@@ -199,7 +275,89 @@ class ReplyCommentScreenState extends State<ReplyCommentScreen> {
       return  Text('@${entity.replyNickname} :${entity.comment}', style: primaryTextStyle());
     }else{
       return  Text('${entity.comment}', style: primaryTextStyle());
+    }
   }
+
+  Widget getComment(CommentsEntity comment,UserModel userModel){
+    return  Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CircleAvatar(
+          backgroundImage: AssetImage(comment.circleUrl!),
+          radius: 30,
+        ),
+        16.width,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('${comment.nickname}', style: boldTextStyle()),
+            4.height,
+            getReplay(comment),
+            // Text('${commentList[index].comment}', style: primaryTextStyle()),
+            4.height,
+            Row(
+              children: [
+                Text('${comment.createTime}', style: secondaryTextStyle(color: grey.withOpacity(0.5))),
+                IconButton(onPressed: (){
+                  if(userModel == null){
+                    //TODO 给出错误提示
+                    showDialog<void>(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (BuildContext dialogContext) {
+                        return BrnDialog(messageText: "请登录之后在评论");
+                      },
+                    );
+                  }else {
+                    _showBottomWriteDialog(context, comment.nickname!,comment.id!);
+                  }
+                }, icon: Icon(Icons.pending,),)
+              ],
+            ).paddingAll(0),
+          ],
+        ).expand(),
+      ],
+    ).paddingSymmetric(vertical: 8).paddingLeft(16);
+  }
+
+  ///底部有输入框弹框
+  void _showBottomWriteDialog(BuildContext context,String nickName,int id) {
+    BrnBottomWritePicker.show(context,  title: '回复@$nickName',
+      hintText: '请输入',
+      confirmDismiss: true,
+      onConfirm: (context, reply) {
+        if (reply != null) {
+          CommentsEntity addEntity = new CommentsEntity();
+          addEntity.wid = widget.comments.wid;
+          addEntity.source = 1;
+          addEntity.comment = reply;
+          addEntity.upid=id;
+          if (reply.length > 5) {
+            Navigator.of(context).pop(true);
+            CommentsDataUtils.reply(addEntity, success: (res) {
+              showOkAlertDialog(
+                context: context,
+                message: '回复成功.',
+              );
+            }, fail: (code, msg) {
+              showOkAlertDialog(
+                context: context,
+                title: '异常',
+                message: msg,
+              );
+            });
+          } else {
+            BrnToast.show("评论长度不能小于5", context,background:Colors.white,textStyle:TextStyle(fontSize: 16, color: Colors.red));
+          }
+        } else {
+          BrnToast.show("请输入评论内容", context,background:Colors.white,textStyle:TextStyle(fontSize: 16, color: Colors.red));
+        }
+      },
+      onCancel: (_){
+        Navigator.of(context).pop(true);
+        // BrnToast.show("说明", context);
+      },
+      defaultText: '',);
   }
 }
 

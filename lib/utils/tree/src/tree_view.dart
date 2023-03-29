@@ -13,6 +13,7 @@ class TreeView extends StatefulWidget {
   final String filterPlaceholder;
   final bool showActions;
   final bool showCheckBox;
+  final bool showRadio;
   final bool contentTappable;
   final Function(TreeNodeData node)? onTap;
   final void Function(TreeNodeData node)? onLoad;
@@ -43,6 +44,7 @@ class TreeView extends StatefulWidget {
     this.filterPlaceholder = 'Search',
     this.showActions = false,
     this.showCheckBox = false,
+    this.showRadio = false,
     this.contentTappable = false,
     this.icon = const Icon(Icons.expand_more, size: 16.0),
   }) : super(key: key);
@@ -160,6 +162,7 @@ class _TreeViewState extends State<TreeView> {
                 lazy: widget.lazy,
                 offsetLeft: widget.offsetLeft,
                 showCheckBox: widget.showCheckBox,
+                showRadio: widget.showRadio,
                 showActions: widget.showActions,
                 contentTappable: widget.contentTappable,
                 onTap: widget.onTap ?? (n) {},

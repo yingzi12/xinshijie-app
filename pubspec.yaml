@@ -53,6 +53,7 @@ dependencies:
   #小工具包
   nb_utils: ^5.0.5  #缓存图片
   cached_network_image: ^3.2.3
+#  flutter_tree_pro: ^0.0.7
   #MobX 是一个用于响应式管理应用程序状态的库。使用可观察对象、动作和反应的力量来增强您的 Dart 和 Flutter 应用程序
 #  mobx: ^2.1.4
 #  #提供 Observer widget，它监听 observables 并在发生变化时自动重建。

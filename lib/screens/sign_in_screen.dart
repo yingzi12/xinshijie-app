@@ -212,6 +212,7 @@ class SignInScreenState extends State<SignInScreen> {
          setToken(res["token"]);
          setRefreshToken(res["token"]);
          Provider.of<UserModel>(context, listen: false).user(userEntity);
+         getCaptchaCode();
     }, fail: (code, msg) {
       getCaptchaCode();
     });

@@ -3,6 +3,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:xinshijieapp/components/world_detail_component.dart';
 import 'package:xinshijieapp/data/world_data_utils.dart';
 import 'package:xinshijieapp/models/world_entity.dart';
+import 'package:xinshijieapp/screens/ElementListScreen.dart';
 import 'package:xinshijieapp/screens/element_list_screen.dart';
 import 'package:xinshijieapp/utils/space.dart';
 
@@ -85,7 +86,7 @@ class _WorldIntroScreenState extends State<WorldIntroScreen> {
                     child:  GestureDetector(
                         onTap: () {
                           setState(() {
-                            ElementListScreen(wid: widget.wid).launch(context);
+                            ElementList2Screen(wid: widget.wid).launch(context);
                             // Navigator.push(
                             //   context,
                             //   MaterialPageRoute(

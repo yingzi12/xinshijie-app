@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bruno/bruno.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
@@ -64,9 +65,6 @@ class WorldDetailScreenState extends State<WorldDetailScreen>
       print("-----------------_WorldCommnetScreen---- getCommentsList fail --------------------");
     });
   }
-
-
-
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -91,7 +89,7 @@ class WorldDetailScreenState extends State<WorldDetailScreen>
                 child: Container(
                   alignment: Alignment.center,
                   // height: 100,
-                  child:WorldIntroScreen(wid: 32),
+                  child:WorldIntroScreen(wid: widget.wid),
                 ),
               ),
             ];
@@ -179,6 +177,13 @@ class WorldDetailScreenState extends State<WorldDetailScreen>
                           onTap: (){
                               if(userModel == null){
                                 //TODO 给出错误提示
+                                showDialog<void>(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  builder: (BuildContext dialogContext) {
+                                    return BrnDialog(messageText: "请登录之后在评论");
+                                  },
+                                );
                               }else {
                                 if (_commentController.text != null) {
                                   CommentsEntity addEntity = new CommentsEntity();
@@ -193,15 +198,42 @@ class WorldDetailScreenState extends State<WorldDetailScreen>
                                       //   commentsList = List<CommentsEntity>.from(
                                       //       res['rows'].map((x) => CommentsEntity.fromJson(x)));
                                       // });
+                                      showDialog<void>(
+                                        context: context,
+                                        barrierDismissible: true,
+                                        builder: (BuildContext dialogContext) {
+                                          return BrnDialog(
+                                            messageText: "评论成功",
+                                            actionsText: [],
+                                          );
+                                        },
+                                      );
                                       //TODO 给出评论成功提示
                                     }, fail: (code, msg) {
+                                      BrnDialogManager.showSingleButtonDialog(context,
+                                        label: "确定",
+                                        title: '错误',
+                                        warning: msg,
+                                      );
                                       //TODO 给出错误提示
                                     });
                                     _commentController.text = "";
                                   } else {
                                     //TODO 给出错误提示
+                                    BrnDialogManager.showSingleButtonDialog(context,
+                                      label: "确定",
+                                      warning: '评论长度不能小于5',
+                                    );
                                   }
                                 } else {
+                                  BrnDialogManager.showSingleButtonDialog(context,
+                                      label: "确定",
+                                      // title: '标题内容',
+                                      warning: '请输入评论内容',
+                                      // message: "辅助内容信息辅助内容信息辅助内容信息辅助内容信息辅助内容信息。", onTap: () {
+                                      //   BrnToast.show('知道了', context);
+                                      // }
+                                      );
                                   //TODO 给出错误提示
                                 }
                               }

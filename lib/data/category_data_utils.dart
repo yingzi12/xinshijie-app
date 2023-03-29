@@ -16,7 +16,7 @@ class CategoryDataUtils {
     Success? success,
     Fail? fail,
   }) {
-    HttpUtils.get(APIs.apiPrefix+CategoryAPIs.getTree+"?wid=$wid", {},{}, success: success, fail: fail);
+    HttpUtils.get(CategoryAPIs.getTree+"?wid=$wid", {},{}, success: success, fail: fail);
   }
 
 }

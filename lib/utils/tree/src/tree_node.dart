@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 import 'tree_node_data.dart';
-
+var logger = Logger(
+  printer: PrettyPrinter(
+    methodCount: 0,
+  ),
+);
 class TreeNode extends StatefulWidget {
   final TreeNodeData data;
   final TreeNodeData parent;
@@ -9,6 +14,7 @@ class TreeNode extends StatefulWidget {
   final bool lazy;
   final Widget icon;
   final bool showCheckBox;
+  final bool showRadio;
   final bool showActions;
   final bool contentTappable;
   final double offsetLeft;
@@ -34,6 +40,7 @@ class TreeNode extends StatefulWidget {
     required this.parent,
     required this.offsetLeft,
     required this.showCheckBox,
+    required this.showRadio,
     required this.showActions,
     required this.contentTappable,
     required this.icon,
@@ -62,6 +69,8 @@ class _TreeNodeState extends State<TreeNode> with SingleTickerProviderStateMixin
   final Tween<double> _turnsTween = Tween<double>(begin: -0.25, end: 0.0);
 
   List<TreeNode> _geneTreeNodes(List list) {
+    var length=list.length;
+   logger.i("_geneTreeNodes $length");
     return List.generate(list.length, (int index) {
       return TreeNode(
         data: list[index],
@@ -73,6 +82,7 @@ class _TreeNodeState extends State<TreeNode> with SingleTickerProviderStateMixin
         load: widget.load,
         offsetLeft: widget.offsetLeft,
         showCheckBox: widget.showCheckBox,
+        showRadio: widget.showRadio,
         showActions: widget.showActions,
         contentTappable: widget.contentTappable,
         onTap: widget.onTap,
@@ -108,8 +118,8 @@ class _TreeNodeState extends State<TreeNode> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
+    // logger.i("tree_node buid");
     bool hasData = widget.data.children.isNotEmpty || (widget.lazy && !_isExpanded);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -153,6 +163,16 @@ class _TreeNodeState extends State<TreeNode> with SingleTickerProviderStateMixin
                       setState(() {});
                     },
                   ),
+                // if (widget.showRadio)
+                //   Radio(
+                //     value: widget.data,
+                //     activeColor: Colors.white10,
+                //     onChanged: (value) {
+                //       print("onChanged object");
+                //       widget.onCheck(_isChecked, widget.data);
+                //       setState(() {});
+                //     }, groupValue: "1",
+                //   ),
                 if (widget.lazy && _showLoading)
                   const SizedBox(
                     width: 12.0,

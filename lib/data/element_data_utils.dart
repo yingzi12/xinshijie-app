@@ -12,6 +12,6 @@ class ElementDataUtils {
         Success? success,
         Fail? fail,
       }) {
-    HttpUtils.get(APIs.apiPrefix+ElementAPIs.getList, {},parameters, success: success, fail: fail);
+    HttpUtils.get(ElementAPIs.getList, parameters,{}, success: success, fail: fail);
   }
 }
