@@ -64,8 +64,8 @@ class ElementList2ScreenState extends State<ElementList2Screen> {
         treeListData = [];
         res['data'].forEach((x){
                 Map<String, dynamic> node={};
-                node["id"]=x["id"];
-                node["parentId"]=x["pid"];
+                node["id"]=int.parse(x["id"]);
+                node["parentId"]=int.parse(x["pid"]);
                 node["value"]=x["label"];
                 node["label"]=x["label"];
                 treeListData.add(node);

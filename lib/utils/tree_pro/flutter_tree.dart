@@ -1,9 +1,6 @@
 library packages;
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 import 'flutter_tree_pro.dart';
@@ -51,8 +48,6 @@ var logger = Logger(
     methodCount: 0,
   ),
 );
-const JsonEncoder encoder = JsonEncoder();
-const JsonDecoder decoder = JsonDecoder();
 
 /// @create at 2021/7/15 15:01
 /// @create by kevin
@@ -77,8 +72,8 @@ class FlutterTreePro extends StatefulWidget {
 
   /// if expanded items
   final bool isExpanded;
-  ///是否允许多选
-  final bool isMultiple;
+
+  final bool isMultiple ;
 
   FlutterTreePro({
     Key? key,
@@ -89,7 +84,7 @@ class FlutterTreePro extends StatefulWidget {
     this.initialListData = const <Map<String, dynamic>>[],
     required this.onChecked,
     this.isExpanded = false,
-    this.isMultiple = true,
+    this.isMultiple = false,
   }) : super(key: key);
 
   @override
@@ -97,9 +92,6 @@ class FlutterTreePro extends StatefulWidget {
 }
 
 class _FlutterTreeProState extends State<FlutterTreePro> {
-  ///  source data type List 历史被选中的数据
-  List<Map<String, dynamic>> listOldData= <Map<String, dynamic>>[];
-
   ///
   Map<String, dynamic> sourceTreeMap = {};
 
@@ -122,17 +114,12 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
 
   @override
   initState() {
-    final List<Map<String, dynamic>> listData = widget.listData;
-    var listLength=listData.length ;
-    var initLength=widget.initialListData.length ;
-
-    logger.i("initState dataList:$listLength  sourceTreeMap:$initLength");
-
     super.initState();
     // set default select
     if (widget.config.dataType == DataType.DataList) {
       var listToMap =
-          DataUtil.transformListToMap(listData, widget.config);
+      DataUtil.transformListToMap(widget.listData, widget.config);
+      logger.i(listToMap);
       sourceTreeMap = listToMap;
       factoryTreeData(sourceTreeMap);
       widget.initialListData.forEach((element) {
@@ -180,10 +167,7 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
     return Column(
       children: [
         GestureDetector(
-          onTap: () =>{
-          logger.i("167 onTap "),
-            onOpenNode(sourceTreeMap)
-            },
+          onTap: () => onOpenNode(sourceTreeMap),
           child: Container(
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.only(left: 20, top: 15),
@@ -194,18 +178,17 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
                   children: [
                     (sourceTreeMap[widget.config.children] ?? []).isNotEmpty
                         ? Icon(
-                            (sourceTreeMap['open'] ?? false)
-                                ? Icons.keyboard_arrow_down_rounded
-                                : Icons.keyboard_arrow_right,
-                            size: 20,
-                          )
+                      (sourceTreeMap['open'] ?? false)
+                          ? Icons.keyboard_arrow_down_rounded
+                          : Icons.keyboard_arrow_right,
+                      size: 20,
+                    )
                         : SizedBox.shrink(),
                     SizedBox(
                       width: 5,
                     ),
                     GestureDetector(
                       onTap: () {
-                        logger.i("188 onTap ");
                         selectCheckedBox(sourceTreeMap);
                       },
                       child: buildCheckBoxIcon(sourceTreeMap),
@@ -223,8 +206,8 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
                 ),
                 (sourceTreeMap['open'] ?? false)
                     ? Column(
-                        children: buildTreeNode(sourceTreeMap),
-                      )
+                  children: buildTreeNode(sourceTreeMap),
+                )
                     : SizedBox.shrink(),
               ],
             ),
@@ -238,12 +221,9 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
   /// @desc render item
   buildTreeNode(Map<String, dynamic> data) {
     return (data[widget.config.children] ?? []).map<Widget>(
-      (e) {
+          (e) {
         return GestureDetector(
-          onTap: () => {
-            logger.i("227 onTap "),
-            onOpenNode(e)
-           },
+          onTap: () => onOpenNode(e),
           child: Container(
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.only(left: 20, top: 15),
@@ -254,18 +234,17 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
                   children: [
                     (e[widget.config.children] ?? []).isNotEmpty
                         ? Icon(
-                            (e['open'] ?? false)
-                                ? Icons.keyboard_arrow_down_rounded
-                                : Icons.keyboard_arrow_right,
-                            size: 20,
-                          )
+                      (e['open'] ?? false)
+                          ? Icons.keyboard_arrow_down_rounded
+                          : Icons.keyboard_arrow_right,
+                      size: 20,
+                    )
                         : SizedBox.shrink(),
                     SizedBox(
                       width: 5,
                     ),
                     GestureDetector(
                       onTap: () {
-                        logger.i("251 onTap ");
                         selectCheckedBox(e);
                       },
                       child: buildCheckBoxIcon(e),
@@ -283,8 +262,8 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
                 ),
                 (e['open'] ?? false)
                     ? Column(
-                        children: buildTreeNode(e),
-                      )
+                  children: buildTreeNode(e),
+                )
                     : SizedBox.shrink(),
               ],
             ),
@@ -337,20 +316,9 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
   }
 
   /// @params
-  /// @desc 选中复选框
+  /// @desc 选中帅选框
   selectCheckedBox(Map<String, dynamic> dataModel) {
-    logger.i("选中复选框 selectCheckedBox 340 dataMode:$dataModel");
-    // logger.i("选中复选框 selectCheckedBox 325 dataMode:$dataModel");
     int checked = dataModel['checked']!;
-    //新增逻辑,判断是否只能选择一个的关键
-    if(widget.isMultiple == false){
-      logger.i("选中复选框 selectCheckedBox  listOldData:$listOldData");
-      // logger.i("选中老复选框 selectCheckedBox 325 listOldData: $listOldData");
-      for(var item  in listOldData){
-        updateNodeNotSelected(item);
-      }
-      listOldData.clear();
-    }
     if ((dataModel[widget.config.children] ?? []).isNotEmpty) {
       var stack = MStack();
       stack.push(dataModel);
@@ -373,7 +341,7 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
       }
     }
 
-    //更新 父节点标识
+    // 父节点
     if (dataModel[widget.config.parentId]! > -1) {
       updateParentNode(dataModel);
     }
@@ -386,7 +354,6 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
   /// @params
   /// @desc 获取选中的条目
   getCheckedItems() {
-    // logger.i("getCheckedItems sourceTreeMap:$sourceTreeMap");
     var stack = MStack();
     var checkedList = [];
     stack.push(sourceTreeMap);
@@ -396,12 +363,11 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
         stack.push(item);
       }
       if (node['checked'] == 2) {
-        // logger.i("node: $node");
         checkedList.add(node);
       }
     }
-    logger.i("选中复选框 getCheckedItems 399 ");
-    logger.i(checkedList.length);
+
+    // logger.v(checkedList.length);
 
     // List中多余的元素
     var list1 = [];
@@ -419,9 +385,6 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
     var set = Set.from(checkedList);
     var set2 = Set.from(list1);
     List<Map<String, dynamic>> filterList = List.from(set.difference(set2));
-    if(widget.isMultiple == false) {
-      listOldData.addAll(filterList);
-    }
     widget.onChecked(filterList);
     // var submitList = filterList
     //     .map(
@@ -475,30 +438,8 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
     }
   }
 
-
-  /// 当时重新选中,更新历史选中的状态为未选中
-  updateNodeNotSelected(Map<String, dynamic> dataModel) {
-    var data = treeMap[dataModel[widget.config.id]];
-    data['checked'] = 0;
-    for (var item in (data[widget.config.children] ?? [])) {
-      updateNodeNotSelected(item);
-    }
-    // logger.i("updateNodeNotSelected data:$data");
-  }
-
-  /// 当时重新选中,更新历史选中的状态为未选中
-  updateNodeSelected(Map<String, dynamic> dataModel) {
-    var data = treeMap[dataModel[widget.config.id]];
-    data['checked'] = 2;
-    for (var item in (data[widget.config.children] ?? [])) {
-      updateNodeNotSelected(item);
-    }
-    // logger.i("updateNodeNotSelected data:$data");
-  }
   @override
   Widget build(BuildContext context) {
-
-    logger.i("build");
     return Container(
       color: Colors.white,
       child: SingleChildScrollView(

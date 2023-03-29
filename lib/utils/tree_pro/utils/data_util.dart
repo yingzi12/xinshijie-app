@@ -6,17 +6,17 @@ import 'package:xinshijieapp/utils/tree_pro/flutter_tree_pro.dart';
 /// @desc
 
 class DataUtil {
-  /// @params3 = {_Map} size = 5
-  /// @desc  List to map72 = {_Map} size = 6
+  /// @params
+  /// @desc  List to map
   static Map<String, dynamic> transformListToMap(List dataList, Config config) {
-    Map<String, dynamic> obj = {};
+    Map obj = {};
     Map<String, dynamic> root={};
-    root["id"]="0";
+    root["id"]=0;
     root["value"]="全部";
     root["label"]="全部";
-    root["parentId"]= "-1" ;
+    root["parentId"]= -1 ;
     dataList.add(root);
-    List<int> rootIds=[];
+    int? rootId;
     dataList.forEach((v) {
       // 根节点
       if (v[config.parentId] != -1) {
@@ -32,14 +32,14 @@ class DataUtil {
           };
         }
       } else {
-        rootIds.add(v[config.id]);
+        rootId = v[config.id];
       }
       if (obj[v[config.id]] != null) {
         v[config.children] = obj[v[config.id]][config.children];
       }
       obj[v[config.id]] = v;
     });
-    return obj["0"];
+    return obj[rootId] ?? {};
   }
 
   /// @params
@@ -54,14 +54,14 @@ class DataUtil {
     return {"aaa": ""};
   }
 
-  /// @params
-  /// @desc 将树形结构数据平铺开
-  // factoryTreeData(treeModel ,Config config) {
-  //   treeModel['open'] = false;
-  //   treeModel['checked'] = 0;
-  //   treeMap.putIfAbsent(treeModel[config.id], () => treeModel);
-  //   (treeModel[config.children] ?? []).forEach((element) {
-  //     factoryTreeData(element);
-  //   });
-  // }
+/// @params
+/// @desc 将树形结构数据平铺开
+// factoryTreeData(treeModel ,Config config) {
+//   treeModel['open'] = false;
+//   treeModel['checked'] = 0;
+//   treeMap.putIfAbsent(treeModel[config.id], () => treeModel);
+//   (treeModel[config.children] ?? []).forEach((element) {
+//     factoryTreeData(element);
+//   });
+// }
 }
