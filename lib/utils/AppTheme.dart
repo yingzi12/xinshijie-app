@@ -14,7 +14,7 @@ class AppThemeData {
     scaffoldBackgroundColor: whiteColor,
     primaryColor: appColorPrimary,
     primaryColorDark: appColorPrimary,
-    errorColor: Colors.red,
+    // errorColor: Colors.red,
     hoverColor: Colors.white54,
     dividerColor: viewLineColor,
     fontFamily: GoogleFonts.openSans().fontFamily,
@@ -29,11 +29,11 @@ class AppThemeData {
     cardColor: cardLightColor,
     iconTheme: IconThemeData(color: textPrimaryColor),
     bottomSheetTheme: BottomSheetThemeData(backgroundColor: whiteColor),
-    textTheme: TextTheme(
-      button: TextStyle(color: appColorPrimary),
-      headline6: TextStyle(color: textPrimaryColor),
-      subtitle2: TextStyle(color: textSecondaryColor),
-    ),
+    // textTheme: TextTheme(
+    //   button: TextStyle(color: appColorPrimary),
+    //   headline6: TextStyle(color: textPrimaryColor),
+    //   subtitle2: TextStyle(color: textSecondaryColor),
+    // ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
   ).copyWith(
     pageTransitionsTheme: PageTransitionsTheme(builders: <TargetPlatform, PageTransitionsBuilder>{
@@ -46,19 +46,19 @@ class AppThemeData {
 
   static final ThemeData darkTheme = ThemeData(
       //脚手架材料的默认颜色。 典型材质应用或应用内页面的背景色。
-      scaffoldBackgroundColor: appBackgroundColorDark,
+      // scaffoldBackgroundColor: appBackgroundColorDark,
       //选中墨水飞溅动画期间使用的高亮颜色或用于指示菜单中的项目。
-      highlightColor: appBackgroundColorDark,
-      appBarTheme: AppBarTheme(
-        //用于应用程序栏材质的填充颜色
-        backgroundColor: appBackgroundColorDark,
-        //AppBar 的leading和 actions小部件的默认文本样式，但不是它的title。
-        // toolbarTextStyle:TextStyle(color: Colors.black),
-        //AppBar标题小部件的默认文本样式。
-        titleTextStyle:TextStyle(color: Colors.black),
-        iconTheme: IconThemeData(color: blackColor),
-        systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
-      ),
+      // highlightColor: appBackgroundColorDark,
+      // appBarTheme: AppBarTheme(
+      //   //用于应用程序栏材质的填充颜色
+      //   backgroundColor: appBackgroundColorDark,
+      //   //AppBar 的leading和 actions小部件的默认文本样式，但不是它的title。
+      //   // toolbarTextStyle:TextStyle(color: Colors.black),
+      //   //AppBar标题小部件的默认文本样式。
+      //   titleTextStyle:TextStyle(color: Colors.black),
+      //   iconTheme: IconThemeData(color: blackColor),
+      //   systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+      // ),
       //用于主题交互元素的颜色
      // 这种颜色通常用于按钮和可点击元素中的文本和图标。默认为CupertinoColors.activeBlue。
       primaryColor: color_primary_black,
@@ -82,8 +82,11 @@ class AppThemeData {
       ),
       visualDensity: VisualDensity.adaptivePlatformDensity,
       colorScheme: ColorScheme
-          .dark(primary: appBackgroundColorDark, onPrimary: cardBackgroundBlackDark, primaryContainer: color_primary_black)
-          .copyWith(secondary: whiteColor,error: Color(0xFFCF6676)),
+          .dark(primary: appBackgroundColorDark,
+          onPrimary: cardBackgroundBlackDark,
+          error: Colors.red,
+          primaryContainer: color_primary_black)
+          .copyWith(secondary: whiteColor,error:Colors.red ),
   ).copyWith(
   pageTransitionsTheme: PageTransitionsTheme(builders: <TargetPlatform, PageTransitionsBuilder>{
   TargetPlatform.android: OpenUpwardsPageTransitionsBuilder(),

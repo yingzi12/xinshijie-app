@@ -9,6 +9,7 @@ import 'package:xinshijieapp/models/captcha_entity.dart';
 import 'package:xinshijieapp/models/comments_entity.dart';
 import 'package:xinshijieapp/models/discuss_entity.dart';
 import 'package:xinshijieapp/models/element_entity.dart';
+import 'package:xinshijieapp/models/story_entity.dart';
 import 'package:xinshijieapp/models/user_entity.dart';
 import 'package:xinshijieapp/models/world_entity.dart';
 
@@ -22,8 +23,9 @@ class JsonConvert {
 		(CommentsEntity).toString(): CommentsEntity.fromJson,
 		(DiscussEntity).toString(): DiscussEntity.fromJson,
 		(ElementEntity).toString(): ElementEntity.fromJson,
-		(ElementCategoryList).toString(): ElementCategoryList.fromJson,
-		(ElementContentList).toString(): ElementContentList.fromJson,
+		(ElementCategoryEntity).toString(): ElementCategoryEntity.fromJson,
+		(ElementContentEntity).toString(): ElementContentEntity.fromJson,
+		(StoryEntity).toString(): StoryEntity.fromJson,
 		(UserEntity).toString(): UserEntity.fromJson,
 		(WorldEntity).toString(): WorldEntity.fromJson,
 	};
@@ -119,11 +121,14 @@ class JsonConvert {
 		if(<ElementEntity>[] is M){
 			return data.map<ElementEntity>((Map<String, dynamic> e) => ElementEntity.fromJson(e)).toList() as M;
 		}
-		if(<ElementCategoryList>[] is M){
-			return data.map<ElementCategoryList>((Map<String, dynamic> e) => ElementCategoryList.fromJson(e)).toList() as M;
+		if(<ElementCategoryEntity>[] is M){
+			return data.map<ElementCategoryEntity>((Map<String, dynamic> e) => ElementCategoryEntity.fromJson(e)).toList() as M;
 		}
-		if(<ElementContentList>[] is M){
-			return data.map<ElementContentList>((Map<String, dynamic> e) => ElementContentList.fromJson(e)).toList() as M;
+		if(<ElementContentEntity>[] is M){
+			return data.map<ElementContentEntity>((Map<String, dynamic> e) => ElementContentEntity.fromJson(e)).toList() as M;
+		}
+		if(<StoryEntity>[] is M){
+			return data.map<StoryEntity>((Map<String, dynamic> e) => StoryEntity.fromJson(e)).toList() as M;
 		}
 		if(<UserEntity>[] is M){
 			return data.map<UserEntity>((Map<String, dynamic> e) => UserEntity.fromJson(e)).toList() as M;

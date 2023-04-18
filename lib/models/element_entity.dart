@@ -5,9 +5,9 @@ import 'dart:convert';
 @JsonSerializable()
 class ElementEntity {
 
-	List<ElementCategoryList>? categoryList;
-	List<dynamic>? cnameList;
-	List<ElementContentList>? contentList;
+	List<ElementCategoryEntity>? categoryList;
+	List<String>? cnameList;
+	List<ElementContentEntity>? contentList;
 	int? countComment;
 	int? countEdit;
 	int? countSee;
@@ -32,6 +32,7 @@ class ElementEntity {
 	int? version;
 	int? wid;
 	String? wname;
+	String? pageHtml;
   
   ElementEntity();
 
@@ -46,7 +47,7 @@ class ElementEntity {
 }
 
 @JsonSerializable()
-class ElementCategoryList {
+class ElementCategoryEntity {
 
 	String? code;
 	int? id;
@@ -58,11 +59,11 @@ class ElementCategoryList {
 	String? value;
 	int? wid;
   
-  ElementCategoryList();
+  ElementCategoryEntity();
 
-  factory ElementCategoryList.fromJson(Map<String, dynamic> json) => $ElementCategoryListFromJson(json);
+  factory ElementCategoryEntity.fromJson(Map<String, dynamic> json) => $ElementCategoryEntityFromJson(json);
 
-  Map<String, dynamic> toJson() => $ElementCategoryListToJson(this);
+  Map<String, dynamic> toJson() => $ElementCategoryEntityToJson(this);
 
   @override
   String toString() {
@@ -71,7 +72,7 @@ class ElementCategoryList {
 }
 
 @JsonSerializable()
-class ElementContentList {
+class ElementContentEntity {
 
 	String? content;
 	int? createId;
@@ -92,11 +93,11 @@ class ElementContentList {
 	String? updateTime;
 	int? wid;
   
-  ElementContentList();
+  ElementContentEntity();
 
-  factory ElementContentList.fromJson(Map<String, dynamic> json) => $ElementContentListFromJson(json);
+  factory ElementContentEntity.fromJson(Map<String, dynamic> json) => $ElementContentEntityFromJson(json);
 
-  Map<String, dynamic> toJson() => $ElementContentListToJson(this);
+  Map<String, dynamic> toJson() => $ElementContentEntityToJson(this);
 
   @override
   String toString() {

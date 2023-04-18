@@ -120,7 +120,7 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
     if (widget.config.dataType == DataType.DataList) {
       var listToMap =
       DataUtil.transformListToMap(widget.listData, widget.config);
-      logger.i(listToMap);
+      logger.d(listToMap);
       sourceTreeMap = listToMap;
       factoryTreeData(sourceTreeMap);
       widget.initialListData.forEach((element) {
@@ -322,8 +322,7 @@ class _FlutterTreeProState extends State<FlutterTreePro> {
     int checked = dataModel['checked']!;
     //新增逻辑,判断是否只能选择一个的关键
     if(widget.isMultiple == false){
-      logger.i("选中复选框 selectCheckedBox  listOldData:$listOldData");
-      // logger.i("选中老复选框 selectCheckedBox 325 listOldData: $listOldData");
+      logger.d("选中复选框 selectCheckedBox  listOldData:$listOldData");
       for(var item  in listOldData){
         updateNodeNotSelected(item);
       }

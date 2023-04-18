@@ -50,36 +50,7 @@ class IndexBarDragDetails {
   });
 }
 
-///Default Index data.
-const List<String> kIndexBarData = const [
-  '目标名称比较长 A',
-  '目标名称比较长 B',
-  '目标名称比较长 C',
-  '目标名称比较长 D',
-  '目标名称比较长 E',
-  'tag F',
-  'tag G',
-  'tag H',
-  'tag I',
-  'tag J',
-  'tag K',
-  'tag L',
-  'tag M',
-  'tag N',
-  'tag O',
-  'tag P',
-  'tag Q',
-  'tag R',
-  'tag S',
-  'tag T',
-  'tag U',
-  'tag V',
-  'tag W',
-  'tag X',
-  'tag Y',
-  'tag Z',
-  'tag #'
-];
+
 //挂件宽度
 const double kIndexBarWidth = 50;
 
@@ -225,7 +196,7 @@ class IndexBarController {
 class IndexBar extends StatefulWidget {
   IndexBar({
     Key? key,
-    this.data = kIndexBarData,
+    required this.data ,
     this.width = kIndexBarWidth,
     this.height,
     this.itemHeight = kIndexBarItemHeight,
@@ -478,7 +449,7 @@ class _IndexBarState extends State<IndexBar> {
 class BaseIndexBar extends StatefulWidget {
   BaseIndexBar({
     Key? key,
-    this.data = kIndexBarData,
+    required this.data ,
     this.width = kIndexBarWidth,
     this.itemHeight = kIndexBarItemHeight,
     this.hapticFeedback = false,

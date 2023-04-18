@@ -110,9 +110,9 @@ class ChapterModel extends ISuspensionBean {
 
   Map<String, dynamic> toJson() => {
     'name': name,
-//        'tagIndex': tagIndex,
-//        'namePinyin': namePinyin,
-//        'isShowSuspension': isShowSuspension
+       'tagIndex': tagIndex,
+       'namePinyin': namePinyin,
+       'isShowSuspension': isShowSuspension
   };
 
   @override

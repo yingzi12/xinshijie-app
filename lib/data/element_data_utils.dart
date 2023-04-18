@@ -14,4 +14,12 @@ class ElementDataUtils {
       }) {
     HttpUtils.get(ElementAPIs.getList, parameters,{}, success: success, fail: fail);
   }
+
+  static void getInfo<T>(
+      parameters, {
+        Success? success,
+        Fail? fail,
+      }) {
+    HttpUtils.get(ElementAPIs.getInfo, parameters,{}, success: success, fail: fail);
+  }
 }

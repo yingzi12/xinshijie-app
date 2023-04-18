@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html_all/flutter_html_all.dart';
+import 'package:xinshijieapp/utils/flutter_html/flutter_html.dart';
 
 
 class HtmlTestStreen extends StatelessWidget {
@@ -294,15 +293,15 @@ class MyHomePageState extends State<MyHomePage> {
           },
           tagsList: Html.tags..addAll(['tex', 'bird', 'flutter']),
           customRenders: {
-            tagMatcher("tex"): CustomRender.widget(
-                widget: (context, buildChildren) => Math.tex(
-                  context.tree.element?.innerHtml ?? '',
-                  mathStyle: MathStyle.display,
-                  textStyle: context.style.generateTextStyle(),
-                  onErrorFallback: (FlutterMathException e) {
-                    return Text(e.message);
-                  },
-                )),
+            // tagMatcher("tex"): CustomRender.widget(
+            //     widget: (context, buildChildren) => Math.tex(
+            //       context.tree.element?.innerHtml ?? '',
+            //       mathStyle: MathStyle.display,
+            //       textStyle: context.style.generateTextStyle(),
+            //       onErrorFallback: (FlutterMathException e) {
+            //         return Text(e.message);
+            //       },
+            //     )),
             tagMatcher("bird"): CustomRender.inlineSpan(
                 inlineSpan: (context, buildChildren) =>
                 const TextSpan(text: "🐦")),
@@ -315,25 +314,25 @@ class MyHomePageState extends State<MyHomePage> {
                   textColor: context.style.color!,
                   size: context.style.fontSize!.value * 5,
                 )),
-            tagMatcher("table"): CustomRender.widget(
-                widget: (context, buildChildren) => SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: tableRender
-                      .call()
-                      .widget!
-                      .call(context, buildChildren),
-                )),
-            audioMatcher(): audioRender(),
-            iframeMatcher(): iframeRender(),
-            mathMatcher():
-            mathRender(onMathError: (error, exception, exceptionWithType) {
-              debugPrint(exception);
-              return Text(exception);
-            }),
-            svgTagMatcher(): svgTagRender(),
-            svgDataUriMatcher(): svgDataImageRender(),
-            svgAssetUriMatcher(): svgAssetImageRender(),
-            svgNetworkSourceMatcher(): svgNetworkImageRender(),
+            // tagMatcher("table"): CustomRender.widget(
+            //     widget: (context, buildChildren) => SingleChildScrollView(
+            //       scrollDirection: Axis.horizontal,
+            //       child: tableRender
+            //           .call()
+            //           .widget!
+            //           .call(context, buildChildren),
+            //     )),
+            // audioMatcher(): audioRender(),
+            // iframeMatcher(): iframeRender(),
+            // mathMatcher():
+            // mathRender(onMathError: (error, exception, exceptionWithType) {
+            //   debugPrint(exception);
+            //   return Text(exception);
+            // }),
+            // svgTagMatcher(): svgTagRender(),
+            // svgDataUriMatcher(): svgDataImageRender(),
+            // svgAssetUriMatcher(): svgAssetImageRender(),
+            // svgNetworkSourceMatcher(): svgNetworkImageRender(),
             networkSourceMatcher(domains: ["flutter.dev"]):
             CustomRender.widget(widget: (context, buildChildren) {
               return const FlutterLogo(size: 36);
@@ -352,7 +351,7 @@ class MyHomePageState extends State<MyHomePage> {
             // Custom placeholder image for broken links
             networkSourceMatcher():
             networkImageRender(altWidget: (_) => const FlutterLogo()),
-            videoMatcher(): videoRender(),
+            // videoMatcher(): videoRender(),
           },
           onLinkTap: (url, _, __, ___) {
             debugPrint("Opening $url...");

@@ -20,7 +20,7 @@ class AzListView extends StatefulWidget {
     this.susItemHeight = kSusItemHeight,
     this.susPosition,
     this.indexHintBuilder,
-    this.indexBarData = kIndexBarData,
+    required this.indexBarData ,
     this.indexBarWidth = kIndexBarWidth,
     this.indexBarHeight,
     this.indexBarItemHeight = kIndexBarItemHeight,

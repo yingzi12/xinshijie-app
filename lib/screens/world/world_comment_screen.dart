@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:xinshijieapp/components/comment_component.dart';
-import 'package:xinshijieapp/components/world_detail_component.dart';
 import 'package:xinshijieapp/data/comments_data_utils.dart';
-import 'package:xinshijieapp/data/world_data_utils.dart';
 import 'package:xinshijieapp/models/comments_entity.dart';
-import 'package:xinshijieapp/models/world_entity.dart';
-import 'package:xinshijieapp/screens/element_list_screen.dart';
 
-import 'package:xinshijieapp/utils/AppWidget.dart';
-import 'package:xinshijieapp/utils/space.dart';
 
 class WorldCommnetScreen extends StatefulWidget {
   WorldCommnetScreen({Key? key,required this.wid,required this.pageNum}) : super(key: key);

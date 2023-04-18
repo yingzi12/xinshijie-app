@@ -35,6 +35,7 @@ dependencies:
     sdk: flutter
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+  webview_flutter: ^4.0.7
   cupertino_icons: ^1.0.5
   #一个列表，其中包含以编程方式滚动到项目的辅助方法。
   scrollable_positioned_list: ^0.3.5
@@ -52,6 +53,7 @@ dependencies:
   provider: ^6.0.5
   #小工具包
   nb_utils: ^5.0.5  #缓存图片
+
   cached_network_image: ^3.2.3
 #  flutter_tree_pro: ^0.0.7
   #MobX 是一个用于响应式管理应用程序状态的库。使用可观察对象、动作和反应的力量来增强您的 Dart 和 Flutter 应用程序
@@ -62,7 +64,7 @@ dependencies:
   onesignal_flutter: ^3.4.2
   #数据持久化
   shared_preferences: ^2.0.18
-  html: ^0.15.2
+#  html: ^0.15.2
   url_launcher: ^6.1.10
   #Dart 中的统一形式表示。 Formz 旨在以通用方式简化表单表示和验证。
   formz: ^0.5.0+1
@@ -80,7 +82,7 @@ dependencies:
   uuid: ^3.0.7
   bruno: ^3.3.0
   #上标文字图案
-  badges: ^3.0.2
+  badges: ^3.0.3
   #轮播
   smooth_page_indicator: ^1.0.1
   # add this line to your dependencies
@@ -92,7 +94,7 @@ dependencies:
   flutter_mobx: ^2.0.6+5
   get: ^4.6.5
   #富文本
-  flutter_quill: ^7.0.1
+  flutter_quill: ^7.0.3
   #flutter_quill demo
   universal_html: ^2.0.8
 
@@ -105,8 +107,7 @@ dependencies:
   #flutter_quill demo
   file_picker: ^5.2.2
   #flutter_quill demo
-  flutter_quill_extensions:
-    path: flutter_quill_extensions
+
   #将外部滚动(Header部分)和内部滚动(Body部分)联动起来。里面滚动不了，滚动外面。外面滚动没了，滚动里面
 #  扩展NestedScrollView来修复下面的问题
 #  1. pinned的Header问题
@@ -142,7 +143,7 @@ dependencies:
   #可删除.测试用
   easy_refresh_space: ^1.0.2
 #  google_mobile_ads: ^2.3.0
-  #缓存互联网上的图片
+  http: ^0.13.5
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -163,11 +164,17 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
   mocktail: ^0.3.0
   equatable: ^2.0.5
+  list_counter: ^1.0.2
   #显示html
 #  flutter_widget_from_html: ^0.10.0
-  flutter_html_all: ^3.0.0-alpha.6
+#  flutter_html_all: ^3.0.0-alpha.6
   #视频播放
   flutter_meedu_videoplayer: ^3.2.0
+  #模拟数据
+  mockito: ^5.4.0
+  build_runner: ^2.3.3
+  http: ^0.13.5
+#  test: ^1.24.1
 flutter:
 
   # The following line ensures that the Material Icons font is

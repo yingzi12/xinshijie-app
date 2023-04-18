@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xinshijieapp/data/world_data_utils.dart';
 import 'package:xinshijieapp/models/world_entity.dart';
-import 'package:xinshijieapp/screens/world_detail_screen.dart';
+import 'package:xinshijieapp/screens/world/world_detail_screen.dart';
 import 'package:xinshijieapp/utils/AppConstant.dart';
 
 class PopularServiceComponent extends StatefulWidget {

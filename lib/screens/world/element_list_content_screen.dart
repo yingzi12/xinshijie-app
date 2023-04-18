@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:bruno/bruno.dart';
 import 'package:flutter/material.dart';
-import 'package:xinshijieapp/components/element_detail_component.dart';
+import 'package:xinshijieapp/screens/world/element_detail_component.dart';
 import 'package:xinshijieapp/data/category_data_utils.dart';
 import 'package:xinshijieapp/data/element_data_utils.dart';
 import 'package:xinshijieapp/models/element_entity.dart';
@@ -73,7 +73,7 @@ class _ElementListContentScreenState extends State<ElementListContentScreen> {
       itemBuilder: (context, index) {
         return GestureDetector(
           onDoubleTap: () {
-            onCardTapped(index);
+            onCardTapped(index,elementList![index].id?? 0);
           },
           child:
           Card(
@@ -98,12 +98,12 @@ class _ElementListContentScreenState extends State<ElementListContentScreen> {
 
 
 
-  onCardTapped(int position) {
+  onCardTapped(int position,int _eid) {
     print("card $position");
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ElementDetailComponent(),
+        builder: (context) => ElementDetailComponent(wid: widget.wid,eid: _eid,),
       ),
     );
   }

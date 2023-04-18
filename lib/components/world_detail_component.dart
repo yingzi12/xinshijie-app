@@ -2,6 +2,7 @@ import 'package:bruno/bruno.dart';
 import 'package:flutter/material.dart';
 import 'package:xinshijieapp/models/world_entity.dart';
 import 'package:xinshijieapp/utils/AppConstant.dart';
+import 'package:badges/badges.dart' as badges;
 
 class WorldDetailComponent extends StatefulWidget {
 
@@ -61,8 +62,8 @@ class _WorldDetailComponentState extends State<WorldDetailComponent> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Badge(
-            label: Text(rank.toString()),
+      badges.Badge(
+        badgeContent: Text(rank.toString()),
             child: Text(
               widget.world.name ?? "",
               style: const TextStyle(

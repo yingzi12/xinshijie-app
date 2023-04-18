@@ -3,8 +3,8 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:xinshijieapp/components/world_detail_component.dart';
 import 'package:xinshijieapp/data/world_data_utils.dart';
 import 'package:xinshijieapp/models/world_entity.dart';
-import 'package:xinshijieapp/screens/ElementListScreen.dart';
-import 'package:xinshijieapp/screens/element_list_screen.dart';
+import 'package:xinshijieapp/screens/world/element_list_screen.dart';
+import 'package:xinshijieapp/screens/world/story_list_screen.dart';
 import 'package:xinshijieapp/utils/space.dart';
 
 class WorldIntroScreen extends StatefulWidget {
@@ -112,12 +112,12 @@ class _WorldIntroScreenState extends State<WorldIntroScreen> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => LargeDataScreen(),
-                        //   ),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => StoryListcreen(wid: widget.wid),
+                          ),
+                        );
                       });
                     },
                     child: Container(
