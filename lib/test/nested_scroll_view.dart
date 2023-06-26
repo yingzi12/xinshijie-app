@@ -1,12 +1,10 @@
 import 'dart:async';
 
-import 'package:bruno/bruno.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:get/get.dart';
 import 'package:xinshijieapp/utils/skeleton_item.dart';
-import 'package:xinshijieapp/utils/space.dart';
 
 class NestedScrollViewPage extends StatefulWidget {
   const NestedScrollViewPage({Key? key}) : super(key: key);

@@ -1,8 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:xinshijieapp/main.dart';
 import 'package:xinshijieapp/screens/comment_dateil_screen.dart';
+import 'package:xinshijieapp/utils/cached_network_image/cached_network_image.dart';
 
 class SVCommentReplyComponent extends StatelessWidget {
   const SVCommentReplyComponent({Key? key}) : super(key: key);

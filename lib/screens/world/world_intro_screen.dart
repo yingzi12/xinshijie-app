@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:xinshijieapp/components/world_detail_component.dart';
 import 'package:xinshijieapp/data/world_data_utils.dart';
 import 'package:xinshijieapp/models/world_entity.dart';
+import 'package:xinshijieapp/screens/CommentComponent.dart';
+import 'package:xinshijieapp/screens/CommentScreen.dart';
 import 'package:xinshijieapp/screens/world/element_list_screen.dart';
 import 'package:xinshijieapp/screens/world/story_list_screen.dart';
+import 'package:xinshijieapp/screens/world/world_discuss_screen.dart';
 import 'package:xinshijieapp/utils/space.dart';
 
 class WorldIntroScreen extends StatefulWidget {
@@ -16,7 +20,9 @@ class WorldIntroScreen extends StatefulWidget {
 }
 
 class _WorldIntroScreenState extends State<WorldIntroScreen> {
-    WorldEntity? world;
+  var logger = Logger();
+
+  WorldEntity? world;
    @override
    void initState() {
      print("---------------WorldIntroScreen- initState-----------------");
@@ -85,6 +91,8 @@ class _WorldIntroScreenState extends State<WorldIntroScreen> {
                     flex: 1,
                     child:  GestureDetector(
                         onTap: () {
+                          logger.i("调用 元素 onTap");
+
                           setState(() {
                             ElementList2Screen(wid: widget.wid).launch(context);
                             // Navigator.push(
@@ -128,16 +136,25 @@ class _WorldIntroScreenState extends State<WorldIntroScreen> {
                 ),
                 Expanded(
                     flex: 1,
-                    child: Container(
-                        decoration: new BoxDecoration(
-                          border: Border(
-                              left: BorderSide(
-                                  color: Colors.red, width: 1)), // 边色与边宽度
-                          // borderRadius: new BorderRadius.vertical(top: Radius.elliptical(20, 50)), // 也可控件一边圆角大小
-                        ),
-                        child: Column(
-                          children: <Widget>[Text("讨论"), Text(world!.countComment!.toString()?? "0")],
-                        ))),
+                    child: GestureDetector(
+                      onTap: () {
+                        logger.d("调用 onTap");
+                        setState(() {
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CommentScreen(),
+                            ),
+                          );
+                        });
+                      },
+                      child: Container(
+                          child: Column(
+                            children: <Widget>[Text("讨论"), Text(world!.countDiscuss!.toString()?? "0")],
+                          )),
+                    ),
+                ),
               ],
             ),
           ),

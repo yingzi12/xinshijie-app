@@ -1,9 +1,7 @@
 import 'dart:convert';
 
-import 'package:bruno/bruno.dart';
 import 'package:flutter/material.dart';
 import 'package:xinshijieapp/screens/world/element_detail_component.dart';
-import 'package:xinshijieapp/data/category_data_utils.dart';
 import 'package:xinshijieapp/data/element_data_utils.dart';
 import 'package:xinshijieapp/models/element_entity.dart';
 

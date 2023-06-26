@@ -1,8 +1,7 @@
-import 'package:bruno/bruno.dart';
+import 'package:xinshijieapp/utils/bruno/bruno.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:xinshijieapp/models/comments_entity.dart';
-import 'package:xinshijieapp/screens/CommentScreen.dart';
 import 'package:xinshijieapp/screens/ReplyCommentScreen.dart';
 import 'package:xinshijieapp/screens/comment_dateil_screen.dart';
 import 'package:xinshijieapp/utils/AppConstant.dart';

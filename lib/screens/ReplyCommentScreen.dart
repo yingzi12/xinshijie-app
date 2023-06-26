@@ -1,5 +1,4 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:bruno/bruno.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +10,7 @@ import 'package:xinshijieapp/main.dart';
 import 'package:xinshijieapp/models/comments_entity.dart';
 import 'package:xinshijieapp/models/user_model.dart';
 import 'package:xinshijieapp/utils/AppColors.dart';
+import 'package:xinshijieapp/utils/bruno/bruno.dart';
 
 class ReplyCommentScreen extends StatefulWidget {
   ReplyCommentScreen({Key? key, required this.comments}) : super(key: key);

@@ -1,4 +1,5 @@
-import 'package:bruno/bruno.dart';
+import 'package:xinshijieapp/screens/story/story_datail_screen_commit.dart';
+import 'package:xinshijieapp/utils/bruno/bruno.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +12,7 @@ import 'package:xinshijieapp/data/comments_data_utils.dart';
 import 'package:xinshijieapp/models/comments_entity.dart';
 import 'package:xinshijieapp/models/story_entity.dart';
 import 'package:xinshijieapp/models/user_model.dart';
-import 'package:xinshijieapp/models/world_entity.dart';
 import 'package:xinshijieapp/screens/story/chapter_list_screen.dart';
-import 'package:xinshijieapp/screens/world/element_list_screen.dart';
-import 'package:xinshijieapp/screens/world/world_intro_screen.dart';
 import 'package:xinshijieapp/utils/AppColors.dart';
 import 'package:xinshijieapp/utils/AppConstant.dart';
 import 'package:badges/badges.dart' as badges;
@@ -75,7 +73,6 @@ class _StoryDatailScreenState extends State<StoryDatailScreen>  with SingleTicke
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     UserModel userModel = Provider.of<UserModel>(context);
-    final themeData = Theme.of(context);
     return Scaffold(
       body: ExtendedNestedScrollView(
           onlyOneScrollInBody: true,
@@ -106,51 +103,7 @@ class _StoryDatailScreenState extends State<StoryDatailScreen>  with SingleTicke
                     children: <Widget>[
                       homeTitleWidget(titleText: "评论", onAllTap: () {},),
                       Expanded(child:
-                      EasyRefresh(
-                        controller: _controller,
-                        header: BezierCircleHeader(
-                          foregroundColor: themeData.scaffoldBackgroundColor,
-                          backgroundColor: themeData.colorScheme.primary,
-                        ),
-                        onRefresh: () async {
-                          print("调用onRefresh");
-                          await Future.delayed(const Duration(seconds: 2));
-                          if (!mounted) {
-                            return;
-                          }
-                          setState(() {
-                            pageNum = 1;
-                            _count=0;
-                            commentsList.clear();
-                            getCommentsList();
-                            // _count = 10;
-                          });
-                          _controller.finishRefresh();
-                          _controller.resetFooter();
-                        },
-                        onLoad: () async {
-                          print("调用onLoad");
-                          await Future.delayed(const Duration(seconds: 2));
-                          if (!mounted) {
-                            return;
-                          }
-                          setState(() {
-                            pageNum +=1;
-                            getCommentsList();
-                          });
-                          _controller.finishLoad(
-                              _count >= 20 ? IndicatorResult.noMore : IndicatorResult.success);
-                        },
-                        child: ListView.builder(
-                          clipBehavior: Clip.none,
-                          padding: EdgeInsets.zero,
-                          itemCount: _count,
-                          itemBuilder: (ctx, index) {
-                            print("调用ListView count:"+_count.toString()+" index:"+index.toString());
-                            return   CommentComponet(comments:commentsList![index] );
-                          },
-                        ),
-                      ),
+                         StoryDatailCommitScreen(wid:widget.wid,sid:widget.sid)
                       ),
 
                     ]),
@@ -231,11 +184,7 @@ class _StoryDatailScreenState extends State<StoryDatailScreen>  with SingleTicke
                               } else {
                                 BrnDialogManager.showSingleButtonDialog(context,
                                   label: "确定",
-                                  // title: '标题内容',
                                   warning: '请输入评论内容',
-                                  // message: "辅助内容信息辅助内容信息辅助内容信息辅助内容信息辅助内容信息。", onTap: () {
-                                  //   BrnToast.show('知道了', context);
-                                  // }
                                 );
                                 //TODO 给出错误提示
                               }
@@ -488,13 +437,5 @@ class _StoryDatailScreenState extends State<StoryDatailScreen>  with SingleTicke
   }
 
 
-  List<Widget> _listView(List<String> sourList){
-    return sourList.map((f)=>
-        BrnStateTag(
-          tagText: f,
-          tagState: TagState.succeed,
-        )
-    ).toList();
-  }
 }
 

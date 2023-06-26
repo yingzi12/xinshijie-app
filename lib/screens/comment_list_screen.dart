@@ -1,4 +1,4 @@
-import 'package:bruno/bruno.dart';
+import 'package:xinshijieapp/utils/bruno/bruno.dart';
 import 'package:flutter/material.dart';
 import 'package:xinshijieapp/screens/keepalive.dart';
 import 'package:xinshijieapp/screens/world/world_comment_screen.dart';

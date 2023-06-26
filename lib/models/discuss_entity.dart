@@ -32,7 +32,7 @@ class DiscussEntity {
 	String? updateTime;
 	int? wid;
 	String? wname;
-  
+  int? isRecommend;
   DiscussEntity();
 
   factory DiscussEntity.fromJson(Map<String, dynamic> json) => $DiscussEntityFromJson(json);

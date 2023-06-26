@@ -1,11 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:xinshijieapp/main.dart';
 import 'package:xinshijieapp/screens/CommentReplyComponent.dart';
 import 'package:xinshijieapp/utils/AppImages.dart';
+import 'package:xinshijieapp/utils/cached_network_image/cached_network_image.dart';
 
 class CommentScreen extends StatefulWidget {
   static String tag = '/NBCommentScreen';

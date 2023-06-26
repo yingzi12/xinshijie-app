@@ -1,4 +1,4 @@
-import 'package:bruno/bruno.dart';
+import 'package:xinshijieapp/utils/bruno/bruno.dart';
 import 'package:flutter/material.dart';
 import 'package:xinshijieapp/models/comments_entity.dart';
 import 'package:xinshijieapp/screens/CommentComponent.dart';

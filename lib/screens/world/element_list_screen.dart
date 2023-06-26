@@ -1,13 +1,11 @@
-import 'package:bruno/bruno.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:xinshijieapp/screens/world/element_list_intro_screen.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:xinshijieapp/data/category_data_utils.dart';
-import 'package:xinshijieapp/data/element_data_utils.dart';
 import 'package:xinshijieapp/models/element_entity.dart';
-import 'package:xinshijieapp/screens/world/element_detail_component.dart';
 import 'package:xinshijieapp/utils/AppColors.dart';
 import 'package:xinshijieapp/utils/tree_pro/flutter_tree_pro.dart';
 
@@ -50,7 +48,6 @@ class ElementList2ScreenState extends State<ElementList2Screen> {
   }
 
   Future<void> init() async {
-    getelemetList();
     getTree();
   }
   List<Map<String, dynamic>> treeListData = [];
@@ -74,27 +71,9 @@ class ElementList2ScreenState extends State<ElementList2Screen> {
     print("-----------------_WorldCommnetScreen---- getelemetList fail --------------------");
     });
   }
-  void getelemetList()  {
-    ElementDataUtils.getPageList({'pageNum':pageNum, 'pageSize': 15,'wid':widget.wid,'types':cid==0 ? null:cid}, success: (res) {
-      setState(() {
-        List<ElementEntity> elemetList2 = List<ElementEntity>.from(
-            res['rows'].map((x) => ElementEntity.fromJson(x)));
-        if(elemetList2 != null){
-          elementList.addAll(elemetList2);
-        }
-        elemetList2.clear();
-        _count=elementList.length;
-      });
-    }, fail: (code, msg) {
-      print("-----------------_WorldCommnetScreen---- getelemetList fail --------------------");
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-
-    final themeData = Theme.of(context);
     return Scaffold(
       body: ExtendedNestedScrollView(
           onlyOneScrollInBody: true,
@@ -118,27 +97,27 @@ class ElementList2ScreenState extends State<ElementList2Screen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextButton(onPressed: (){
-                        showListDialog();
-                      }, child: Text("点击选择分类")),
-                      Row(crossAxisAlignment: CrossAxisAlignment.start,children: [
-                        Text("已选择分类:"),
-                        BrnStateTag(
-                          tagText: cName,
-                          tagState: TagState.succeed,
-                        )
-                      ]),
-
-                      // Row(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       CircleAvatar(
-                      //         backgroundImage: AssetImage(widget.elemet.circleUrl!),
-                      //         radius: 20,
-                      //       ),
-                      //       Text(widget.elemet.nickname!, style: boldTextStyle(color:  Color(0xFFFD5530))),
-                      //     ]),
-                      // Text(widget.elemet.comment!, style: boldTextStyle()),
+                  //     TextButton(onPressed: (){
+                  //       // showListDialog();
+                  //     }, child: Text("点击选择分类")),
+                  //     Row(crossAxisAlignment: CrossAxisAlignment.start,children: [
+                  //       Text("已选择分类:"),
+                  //       BrnStateTag(
+                  //         tagText: cName,
+                  //         tagState: TagState.succeed,
+                  //       )
+                  //     ]),
+                  //
+                  //     // Row(
+                  //     //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     //     children: [
+                  //     //       CircleAvatar(
+                  //     //         backgroundImage: AssetImage(widget.elemet.circleUrl!),
+                  //     //         radius: 20,
+                  //     //       ),
+                  //     //       Text(widget.elemet.nickname!, style: boldTextStyle(color:  Color(0xFFFD5530))),
+                  //     //     ]),
+                  //     // Text(widget.elemet.comment!, style: boldTextStyle()),
                     ],
                   ).expand(flex: 2).paddingLeft(16),
                 ),
@@ -150,65 +129,7 @@ class ElementList2ScreenState extends State<ElementList2Screen> {
             Column(
                 children: <Widget>[
                   Expanded(child:
-                  EasyRefresh(
-                    controller: _controller,
-                    header: BezierCircleHeader(
-                      foregroundColor: themeData.scaffoldBackgroundColor,
-                      backgroundColor: themeData.colorScheme.primary,
-                    ),
-                    onRefresh: () async {
-                      await Future.delayed(const Duration(seconds: 2));
-                      if (!mounted) {
-                        return;
-                      }
-                      setState(() {
-                        pageNum = 1;
-                        _count=0;
-                        elementList.clear();
-                        getelemetList();
-                        // _count = 10;
-                      });
-                      _controller.finishRefresh();
-                      _controller.resetFooter();
-                    },
-                    onLoad: () async {
-                      await Future.delayed(const Duration(seconds: 2));
-                      if (!mounted) {
-                        return;
-                      }
-                      setState(() {
-                        pageNum +=1;
-                        getelemetList();
-                      });
-                      _controller.finishLoad(
-                          _count >= 150 ? IndicatorResult.noMore : IndicatorResult.success);
-                    },
-                    child: ListView.builder(
-                      clipBehavior: Clip.none,
-                      padding: EdgeInsets.zero,
-                      itemCount: _count,
-                      itemBuilder: (ctx, index) {
-                        print("调用ListView count:"+_count.toString()+" index:"+index.toString());
-                        return   Card(
-                          child: ListTile(
-                            leading: FlutterLogo(size: 72.0),
-                            title: Text(
-                              elementList[index].title!,
-                              softWrap: false,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            subtitle: Text(
-                                maxLines: 2,
-                                softWrap: false,
-                                overflow: TextOverflow.ellipsis, elementList[index].intro!),
-                            onTap: (){
-                              ElementDetailComponent(wid: widget.wid,eid:  elementList[index].id!,).launch(context);
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                   ElementListIntroScreen(wid:widget.wid,cid: 0,)
                   ),
                 ]),
           )
@@ -280,7 +201,8 @@ class ElementList2ScreenState extends State<ElementList2Screen> {
                   }
                 });
                 if(refresh) {
-                  getelemetList();
+                  //TODO 刷新数据,暂时隐藏
+                  // getelemetList();
                 }
               },
             ),

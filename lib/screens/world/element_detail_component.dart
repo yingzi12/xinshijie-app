@@ -1,4 +1,4 @@
-import 'package:bruno/bruno.dart';
+import 'package:xinshijieapp/utils/bruno/bruno.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:nb_utils/nb_utils.dart';

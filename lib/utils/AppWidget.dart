@@ -1,14 +1,13 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:nb_utils/nb_utils.dart';
-// import 'package:xinshijieapp/utils/common.dart';
 import 'package:xinshijieapp/main.dart';
 import 'package:xinshijieapp/models/AppModel.dart';
 import 'package:xinshijieapp/models/ListModels.dart';
+import 'package:xinshijieapp/utils/cached_network_image/src/cached_image_widget.dart';
 import 'package:xinshijieapp/utils/common_utils/common_utils.dart';
 
 import 'AppColors.dart';
@@ -181,8 +180,8 @@ class CustomTheme extends StatelessWidget {
     return Theme(
       data: appStore.isDarkModeOn
           ? ThemeData.dark().copyWith(
-              accentColor: appColorPrimary,
-              backgroundColor: context.scaffoldBackgroundColor,
+              // accentColor: appColorPrimary,
+              // backgroundColor: context.scaffoldBackgroundColor,
             )
           : ThemeData.light(),
       child: child!,
